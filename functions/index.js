@@ -2,31 +2,52 @@ const functions = require('firebase-functions');
 const express = require('express');
 const admin = require('firebase-admin');
 
-// Initialize Firebase Admin
-const serviceAccount = require('./firebase-key.json');
+// Decode the Base64-encoded service account key from Firebase environment config
+const serviceAccountKey = Buffer.from(
+  functions.config().service_account.key,
+  'base64'
+).toString('utf8');
+
+// Initialize Firebase Admin with the decoded key
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://testdesigncourse.firebaseio.com"
+  credential: admin.credential.cert(JSON.parse(serviceAccountKey)),
 });
 
-// Initialize Express.js
+// Initialize Firestore
+const db = admin.firestore();
+
+// Initialize Express app
 const app = express();
+app.use(express.json()); // Middleware to parse JSON requests
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
-
-app.get('/test-db', async (req, res) => {
+// Example route: POST /register
+app.post('/register', async (req, res) => {
   try {
-    const testDoc = admin.firestore().collection('test').doc('example');
-    await testDoc.set({ message: 'Hello, Firestore!' });
-    const doc = await testDoc.get();
-    res.send(doc.data());
+    const { userId, courseId, runId, moduleIds } = req.body;
+
+    if (!userId || !courseId || !moduleIds || moduleIds.length === 0) {
+      return res.status(400).send({ error: 'Missing required fields' });
+    }
+
+    const userRef = db.collection('users').doc(userId);
+
+    await userRef.set(
+      {
+        enrollments: admin.firestore.FieldValue.arrayUnion({
+          courseId,
+          runId,
+          modules: moduleIds,
+        }),
+      },
+      { merge: true }
+    );
+
+    res.json({ message: 'User registered successfully' });
   } catch (error) {
-    console.error('Error accessing Firestore:', error);
-    res.status(500).send('Error accessing Firestore');
+    console.error('Error registering user:', error);
+    res.status(500).send({ error: 'Error registering user' });
   }
 });
 
-// Export the Express app as a Firebase Function
+// Export the Express app as a Firebase Cloud Function
 exports.app = functions.https.onRequest(app);
