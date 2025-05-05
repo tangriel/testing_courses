@@ -1,32 +1,22 @@
 const express = require('express');
-const admin = require('firebase-admin');
 const app = express();
-const port = 3000;
 
-// Initialize Firebase Admin SDK
-const serviceAccount = require('./firebase-key.json'); // Path to your key file
+app.use(express.json());
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://testdesigncourse.firebaseio.com" // Replace <your-project-id> with your Firebase project ID
-});
+// Example endpoint for `/api/register`
+app.post('/api/register', (req, res) => {
+    const { userId, courseId, runId, moduleIds } = req.body;
 
-const db = admin.firestore();
-
-// Test Firestore connection
-app.get('/test-db', async (req, res) => {
-    try {
-        const testDoc = db.collection('test').doc('example');
-        await testDoc.set({ message: 'Hello, Firestore!' });
-        const doc = await testDoc.get();
-        res.send(doc.data());
-    } catch (error) {
-        console.error('Error accessing Firestore:', error);
-        res.status(500).send('Error accessing Firestore');
+    if (!userId || !courseId || !Array.isArray(moduleIds) || moduleIds.length === 0) {
+        return res.status(400).json({ error: 'Missing or invalid required fields' });
     }
+
+    res.status(200).json({
+        message: 'User registered successfully',
+        data: { userId, courseId, runId, moduleIds }
+    });
 });
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+// Default port for Railway
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
