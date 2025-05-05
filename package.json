@@ -1,0 +1,12 @@
+{
+    "name": "testing_courses",
+    "version": "1.0.0",
+    "description": "A simple project for managing courses and certificates",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
