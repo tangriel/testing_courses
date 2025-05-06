@@ -51,7 +51,7 @@ document.getElementById('certificate-form').addEventListener('submit', function 
     doc.save(`${name}_Certificate.pdf`);
   }
 
-// Function to load courses from the JSON file and display them in the admin panel
+// Function to load courses and populate the dropdown
 function loadCourses() {
     fetch('data/courses.json')
       .then(response => {
@@ -61,19 +61,36 @@ function loadCourses() {
         return response.json();
       })
       .then(courses => {
+        const courseDropdown = document.getElementById('course-or-modules');
         const courseList = document.getElementById('admin-course-list');
+        courseDropdown.innerHTML = ''; // Clear existing options
         courseList.innerHTML = ''; // Clear existing list
   
         courses.forEach(course => {
-          const li = document.createElement('li');
-          li.innerHTML = `
+          // Create an option for the entire course in the dropdown
+          const courseOption = document.createElement('option');
+          courseOption.value = `Course: ${course.title}`;
+          courseOption.textContent = `Course: ${course.title}`;
+          courseDropdown.appendChild(courseOption);
+  
+          // Add the course to the course list
+          const courseListItem = document.createElement('li');
+          courseListItem.innerHTML = `
             <strong>${course.title}</strong> - ${course.price}
             <p>${course.description}</p>
             <ul>
               ${course.modules.map(module => `<li>${module.name} - ${module.price}</li>`).join('')}
             </ul>
           `;
-          courseList.appendChild(li);
+          courseList.appendChild(courseListItem);
+  
+          // Create options for each module in the dropdown
+          course.modules.forEach(module => {
+            const moduleOption = document.createElement('option');
+            moduleOption.value = `Module: ${module.name}`;
+            moduleOption.textContent = `Module: ${module.name}`;
+            courseDropdown.appendChild(moduleOption);
+          });
         });
       })
       .catch(error => {
@@ -81,6 +98,9 @@ function loadCourses() {
         alert('Failed to load courses. Please check your setup.');
       });
   }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCourses();  
   
   // Function to add a new course or module
   function addCourseOrModule(event) {
