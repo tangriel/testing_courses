@@ -15,17 +15,19 @@
   <section id="generate-certificates">
     <h2>Generate Certificates</h2>
     <form id="certificate-form">
-      <label>
-        Participant Name:
-        <input type="text" name="participantName" required>
-      </label>
-      <label>
-        Select Course or Module:
-        <select name="courseOrModule" required>
-          <option value="">Select...</option>
-        </select>
-      </label>
-      <button type="submit">Generate Certificate</button>
+        <label>
+          Name and Surname:
+          <input type="text" id="participant-name" required>
+        </label>
+        <label>
+          Course Name or Module Set:
+          <input type="text" id="course-name" required>
+        </label>
+        <label>
+          Completion Date:
+          <input type="date" id="completion-date" required>
+        </label>
+        <button type="submit">Generate Certificate</button>
     </form>
     <div id="certificate-output"></div>
   </section>
@@ -56,5 +58,6 @@
   </section>
 
   <script src="assets/admin.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>

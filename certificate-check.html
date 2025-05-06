@@ -7,41 +7,25 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Certificate Validation</h1>
-  </header>
-  <section>
-    <form id="validate-form">
-      <label>
-        Certificate Number:
-        <input type="text" name="certificateNumber" required>
-      </label>
-      <button type="submit">Validate</button>
-    </form>
-    <div id="validation-result"></div>
-  </section>
-  <script>
-    document.getElementById('validate-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const certificateNumber = event.target.certificateNumber.value.trim();
-
-      // Fetch certificates.json
-      const response = await fetch('data/certificates.json');
-      const certificates = await response.json();
-
-      // Search for certificate
-      const result = certificates.find(cert => cert.certificateNumber === certificateNumber);
-      const resultDiv = document.getElementById('validation-result');
-      if (result) {
-        resultDiv.innerHTML = `
-          <p>Certificate Found:</p>
-          <p><strong>Name:</strong> ${result.participantName}</p>
-          <p><strong>Course:</strong> ${result.courseName}</p>
-        `;
-      } else {
-        resultDiv.innerHTML = `<p>Certificate not found.</p>`;
-      }
-    });
-  </script>
+  <h1>Certificate Validation</h1>
+  <form id="validation-form">
+    <label>
+      Certificate ID:
+      <input type="text" id="certificate-id">
+    </label>
+    <p>OR</p>
+    <label>
+      Name and Surname:
+      <input type="text" id="participant-name">
+    </label>
+    <label>
+      Course Name or Module Set:
+      <input type="text" id="course-name">
+    </label>
+    <button type="submit">Validate Certificate</button>
+  </form>
+  <div id="validation-result"></div>
+  <script src="assets/validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
