@@ -1,0 +1,15 @@
+[
+    {
+      "id": 1,
+      "title": "Test Design with Human Touch",
+      "description": "Learn the art of test design with practical, real-world techniques.",
+      "price": "200 USD",
+      "modules": [
+        { "name": "Basic Test Design Techniques", "price": "50 USD" },
+        { "name": "Combinatorial Test Design", "price": "50 USD" },
+        { "name": "State-Transition", "price": "50 USD" },
+        { "name": "Practical Session 1", "price": "25 USD" },
+        { "name": "Practical Session 2", "price": "25 USD" }
+      ]
+    }
+  ]

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Validation</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Certificate Validation</h1>
+  </header>
+  <section>
+    <form id="validate-form">
+      <label>
+        Certificate Number:
+        <input type="text" name="certificateNumber" required>
+      </label>
+      <button type="submit">Validate</button>
+    </form>
+    <div id="validation-result"></div>
+  </section>
+  <script>
+    document.getElementById('validate-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const certificateNumber = event.target.certificateNumber.value.trim();
+
+      // Fetch certificates.json
+      const response = await fetch('data/certificates.json');
+      const certificates = await response.json();
+
+      // Search for certificate
+      const result = certificates.find(cert => cert.certificateNumber === certificateNumber);
+      const resultDiv = document.getElementById('validation-result');
+      if (result) {
+        resultDiv.innerHTML = `
+          <p>Certificate Found:</p>
+          <p><strong>Name:</strong> ${result.participantName}</p>
+          <p><strong>Course:</strong> ${result.courseName}</p>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p>Certificate not found.</p>`;
+      }
+    });
+  </script>
+</body>
+</html>

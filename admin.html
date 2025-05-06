@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Admin Panel</h1>
+  </header>
+
+  <!-- Generate Certificates Section -->
+  <section id="generate-certificates">
+    <h2>Generate Certificates</h2>
+    <form id="certificate-form">
+      <label>
+        Participant Name:
+        <input type="text" name="participantName" required>
+      </label>
+      <label>
+        Select Course or Module:
+        <select name="courseOrModule" required>
+          <option value="">Select...</option>
+        </select>
+      </label>
+      <button type="submit">Generate Certificate</button>
+    </form>
+    <div id="certificate-output"></div>
+  </section>
+
+  <!-- Add/Edit Courses Section -->
+  <section id="manage-courses">
+    <h2>Manage Courses</h2>
+    <form id="courses-form">
+      <label>
+        Course Title:
+        <input type="text" name="courseTitle" required>
+      </label>
+      <label>
+        Description:
+        <textarea name="courseDescription" required></textarea>
+      </label>
+      <label>
+        Price:
+        <input type="text" name="coursePrice" required>
+      </label>
+      <label>
+        Modules (comma-separated):
+        <input type="text" name="courseModules" required>
+      </label>
+      <button type="submit">Add Course</button>
+    </form>
+    <ul id="course-list"></ul>
+  </section>
+
+  <script src="assets/admin.js"></script>
+</body>
+</html>
