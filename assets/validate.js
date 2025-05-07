@@ -4,13 +4,14 @@ import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.16.0
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAhzG2ZD53g7HAPAV8eagrFty5DSea6YTA",
+  authDomain: "testdesigncourse.firebaseapp.com",
+  databaseURL: "https://testdesigncourse-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "testdesigncourse",
+  storageBucket: "testdesigncourse.firebasestorage.app",
+  messagingSenderId: "921823882139",
+  appId: "7a9c03ed7caddfe1e20f3e",
+  measurementId: "G-5FBWX5JCXJ"
 };
 
 // Initialize Firebase
