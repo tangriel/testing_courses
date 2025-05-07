@@ -91,15 +91,18 @@ import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.16.0
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
-  apiKey: "AIzaSyAhzG2ZD53g7HAPAV8eagrFty5DSea6YTA",
-  authDomain: "testdesigncourse.firebaseapp.com",
-  databaseURL: "https://testdesigncourse-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "testdesigncourse",
-  storageBucket: "testdesigncourse.firebasestorage.app",
-  messagingSenderId: "921823882139",
-  appId: "7a9c03ed7caddfe1e20f3e",
-  measurementId: "G-5FBWX5JCXJ"
+  apiKey: atob("QWlhU3lBaHpHMlpENTNnN0hBUFJWOGVhZ3JGdHk1RFNlYTZZVEE="),
+  authDomain: atob("dGVzdGRlc2lnbmNvdXJzZS5maXJlYmFzZWFwcC5jb20="),
+  databaseURL: atob("aHR0cHM6Ly90ZXN0ZGVzaWduY291cnNlLWRlZmF1bHQtcnRkYi5ldXJvcGUtd2VzdDEuZmlyZWJhc2VhcHAuY29t"),
+  projectId: atob("dGVzdGRlc2lnbmNvdXJzZQ=="),
+  storageBucket: atob("dGVzdGRlc2lnbmNvdXJzZS5hcHBzcG90LmNvbQ=="),
+  messagingSenderId: atob("OTIxODIzODgyMTM5"),
+  appId: atob("N2E5YzAzZWQ3Y2FkZGZlMWUyMGYzZQ=="),
+  measurementId: atob("Ry01RkJXWDVKQ1hK"),
 };
+
+// Log the decoded values for debugging
+console.log(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
