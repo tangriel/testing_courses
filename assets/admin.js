@@ -26,7 +26,7 @@ document.getElementById('certificate-form').addEventListener('submit', function 
 
 function generateCertificateId(name, selectedCoursesOrModules) {
 // Create a unique ID using a hash of name and all selected courses/modules
-return btoa(`${name}:${selectedCoursesOrModules}`).substring(0, 12); // Shortened base64
+return btoa(`${name}:${selectedCoursesOrModules}`).substring(0, 70); // Shortened base64
 }
 
 function generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId) {

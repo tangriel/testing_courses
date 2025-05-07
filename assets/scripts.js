@@ -10,40 +10,31 @@ document.addEventListener('DOMContentLoaded', () => {
         return response.json();
       })
       .then(courses => {
-
-        const container = document.getElementById('course-or-modules-container');
-        if (!container) {
-          console.error("Element with ID 'course-or-modules-container' not found.");
+        const courseDropdown = document.getElementById('course-or-modules');
+        if (!courseDropdown) {
+          console.error("Element with ID 'course-or-modules' not found.");
           return;
         }
-
-        container.innerHTML = ''; // Clear existing options
-
+  
+        courseDropdown.innerHTML = ''; // Clear existing options
+  
         courses.forEach(course => {
-
-          // Create a checkbox for the entire course
-          const courseCheckbox = document.createElement('div');
-          courseCheckbox.innerHTML = `
-            <label>
-              <input type="checkbox" name="courses[]" value="Course: ${course.title}">
-              Course: ${course.title}
-            </label>
-          `;
-          container.appendChild(courseCheckbox);
-
-          // Create checkboxes for each module in the course
+          // Create an option for the entire course
+          const courseOption = document.createElement('option');
+          courseOption.value = `Course: ${course.title}`;
+          courseOption.textContent = `Course: ${course.title}`;
+          courseDropdown.appendChild(courseOption);
+  
+          // Create options for each module in the course
           course.modules.forEach(module => {
-            const moduleCheckbox = document.createElement('div');
-            moduleCheckbox.innerHTML = `
-              <label style="margin-left: 20px;">
-                <input type="checkbox" name="courses[]" value="Module: ${module.name}">
-                Module: ${module.name}
-              </label>
-            `;
-            container.appendChild(moduleCheckbox);
+            const moduleOption = document.createElement('option');
+            moduleOption.value = `Module: ${module.name}`;
+            moduleOption.textContent = `Module: ${module.name}`;
+            courseDropdown.appendChild(moduleOption);
           });
         });
-
+  
+        console.log("Multi-select dropdown populated successfully.");
       })
       .catch(error => {
         console.error('Error loading courses:', error);
