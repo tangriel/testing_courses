@@ -3,27 +3,30 @@ document.getElementById('certificate-form').addEventListener('submit', function 
   event.preventDefault();
 
   const name = document.getElementById('participant-name').value.trim();
-  const course = document.getElementById('course-or-modules').value.trim();
+  const selectedOptions = Array.from(document.getElementById('course-or-modules').selectedOptions)
+    .map(option => option.value.trim()); // Get all selected options as an array
   const date = document.getElementById('completion-date').value;
 
-  if (!name || !course || !date) {
+  if (!name || selectedOptions.length === 0 || !date) {
     alert('Please fill in all fields.');
     return;
   }
 
+  const selectedCoursesOrModules = selectedOptions.join(', '); // Combine all selected options into a string
+
   // Generate unique certificate ID
-  const certificateId = generateCertificateId(name, course);
+  const certificateId = generateCertificateId(name, selectedCoursesOrModules);
 
   // Generate and download the certificate
-  generateCertificatePDF(name, course, date, certificateId);
+  generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId);
 });
 
-function generateCertificateId(name, course) {
-// Create a unique ID using a hash of name and course
-return btoa(`${name}:${course}`).substring(0, 12); // Shortened base64
+function generateCertificateId(name, selectedCoursesOrModules) {
+// Create a unique ID using a hash of name and all selected courses/modules
+return btoa(`${name}:${selectedCoursesOrModules}`).substring(0, 12); // Shortened base64
 }
 
-function generateCertificatePDF(name, course, date, certificateId) {
+function generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId) {
 const { jsPDF } = window.jspdf; // Assuming jsPDF is already added
 const doc = new jsPDF();
 
@@ -40,12 +43,20 @@ doc.setFontSize(20);
 doc.text(name, 105, 80, { align: 'center' });
 
 doc.setFontSize(16);
-doc.text(`successfully completed the course`, 105, 100, { align: 'center' });
-doc.text(course, 105, 120, { align: 'center' });
+doc.text(`successfully completed the following`, 105, 100, { align: 'center' });
 
-doc.text(`on ${new Date(date).toLocaleDateString()}`, 105, 140, { align: 'center' });
+// Split the selected courses/modules into lines and display them
+const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
+let startY = 120; // Initial Y position for the list
+coursesOrModulesArray.forEach((courseOrModule, index) => {
+  doc.text(`- ${courseOrModule}`, 105, startY + index * 10, { align: 'center' });
+});
 
-doc.text(`Certificate ID: ${certificateId}`, 105, 160, { align: 'center' });
+// Add completion date
+doc.text(`on ${new Date(date).toLocaleDateString()}`, 105, startY + coursesOrModulesArray.length * 10 + 10, { align: 'center' });
+
+// Add Certificate ID
+doc.text(`Certificate ID: ${certificateId}`, 105, startY + coursesOrModulesArray.length * 10 + 30, { align: 'center' });
 
 // Save the PDF
 doc.save(`${name}_Certificate.pdf`);
@@ -62,9 +73,7 @@ fetch('data/courses.json')
   })
   .then(courses => {
     const courseDropdown = document.getElementById('course-or-modules');
-    //const courseList = document.getElementById('admin-course-list');
     courseDropdown.innerHTML = ''; // Clear existing options
-    //courseList.innerHTML = ''; // Clear existing list
 
     courses.forEach(course => {
       // Create an option for the entire course in the dropdown
@@ -82,7 +91,6 @@ fetch('data/courses.json')
           ${course.modules.map(module => `<li>${module.name} - ${module.price}</li>`).join('')}
         </ul>
       `;
-      //courseList.appendChild(courseListItem);
 
       // Create options for each module in the dropdown
       course.modules.forEach(module => {
