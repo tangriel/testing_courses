@@ -3,7 +3,7 @@ document.getElementById('certificate-form').addEventListener('submit', function 
   event.preventDefault();
 
   const name = document.getElementById('participant-name').value.trim();
-  const course = document.getElementById('course-name').value.trim();
+  const course = document.getElementById('course-or-modules').value.trim();
   const date = document.getElementById('completion-date').value;
 
   if (!name || !course || !date) {
