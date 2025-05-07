@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
   <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    // Password hash for my password (hashed using SHA-256)
+    const PASSWORD_HASH = "fc64c23734db5e2e502255cbbe38fa907dfc883dcd8de9392f2de61f63d6ec61";
+  
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(byte => byte.toString(16).padStart(2, "0"))
+        .join("");
+    }
+  
+    (async () => {
+      const userPassword = prompt("Enter the admin password:");
+      const userPasswordHash = await hashPassword(userPassword);
+      if (userPasswordHash !== PASSWORD_HASH) {
+        alert("Access denied.");
+        window.location.href = "index.html"; // Redirect to a public page
+      }
+    })();
+  </script>
 </head>
 <body>
   <header>
