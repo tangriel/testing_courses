@@ -47,20 +47,58 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Handle sign-up form submission
-document.getElementById('sign-up-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
+document.getElementById('sign-up-form').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
 
+  const form = event.target;
+  const formData = new FormData(form);
+
+  // Get form field values
   const name = formData.get('name');
   const email = formData.get('email');
   const phone = formData.get('phone');
-  const course = formData.get('course');
 
-  if (!name || !email || !phone || !course) {
-    alert('Please fill in all fields.');
+  // Get selected courses/modules
+  const selectedOptions = Array.from(document.getElementById('course-or-modules').selectedOptions)
+    .map(option => option.value);
+
+  // Validate fields
+  if (!name || !email || !phone || selectedOptions.length === 0) {
+    alert('Please fill in all fields and select at least one course or module.');
     return;
   }
 
-  alert(`Thank you for signing up, ${name}! We will contact you soon.`);
-  event.target.reset();
+  // Prepare data for Web3Forms submission
+  const web3FormsData = {
+    access_key: "11dc97ae-636d-4b68-a4dd-4c3d558d90ab", // Replace with your Web3Forms access key
+    name: name,
+    email: email,
+    phone: phone,
+    courses: selectedOptions.join(', '), // Combine selected courses/modules into a string
+    subject: "New Course Registration",
+    message: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nCourses/Modules: ${selectedOptions.join(', ')}`
+  };
+
+  try {
+    // Send data to Web3Forms
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(web3FormsData)
+    });
+
+    if (response.ok) {
+      alert(`Thank you for signing up, ${name}! We will contact you soon.`);
+      form.reset(); // Reset the form
+    } else {
+      const errorData = await response.json();
+      console.error('Submission failed with error:', errorData);
+      alert('Something went wrong. Please try again later.');
+    }
+  } catch (error) {
+    console.error('Error while submitting form:', error);
+    alert('Something went wrong. Please try again later.');
+  }
 });

@@ -15,7 +15,9 @@ document.getElementById('certificate-form').addEventListener('submit', function 
   const selectedCoursesOrModules = selectedOptions.join(', '); // Combine all selected options into a string
 
   // Generate unique certificate ID
-  const certificateId = generateCertificateId(name, selectedCoursesOrModules);
+  (async () => {
+    const certificateId = await generateCertificateId(name, selectedCoursesOrModules);
+  })();
 
   // Save certificate data
   saveCertificateData(name, selectedCoursesOrModules, date, certificateId);
@@ -24,9 +26,23 @@ document.getElementById('certificate-form').addEventListener('submit', function 
   generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId);
 });
 
-function generateCertificateId(name, selectedCoursesOrModules) {
-// Create a unique ID using a hash of name and all selected courses/modules
-return btoa(`${name}:${selectedCoursesOrModules}`).substring(0, 70); // Shortened base64
+async function generateCertificateId(name, selectedCoursesOrModules) {
+  // Concatenate name and selectedCoursesOrModules into a single string
+  const inputString = `${name}:${selectedCoursesOrModules.join(',')}`;
+
+  // Encode the string into bytes
+  const encoder = new TextEncoder();
+  const data = encoder.encode(inputString);
+
+  // Generate a SHA-256 hash
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+  // Convert the hash buffer into a hex string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+
+  // Return a shortened version of the hash (first 12 characters)
+  return hashHex.substring(0, 12);
 }
 
 function generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId) {
