@@ -91,14 +91,14 @@ import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.16.0
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
-  apiKey: atob("QWlhU3lBaHpHMlpENTNnN0hBUFJWOGVhZ3JGdHk1RFNlYTZZVEE="),
-  authDomain: atob("dGVzdGRlc2lnbmNvdXJzZS5maXJlYmFzZWFwcC5jb20="),
-  databaseURL: atob("aHR0cHM6Ly90ZXN0ZGVzaWduY291cnNlLWRlZmF1bHQtcnRkYi5ldXJvcGUtd2VzdDEuZmlyZWJhc2VhcHAuY29t"),
-  projectId: atob("dGVzdGRlc2lnbmNvdXJzZQ=="),
-  storageBucket: atob("dGVzdGRlc2lnbmNvdXJzZS5hcHBzcG90LmNvbQ=="),
-  messagingSenderId: atob("OTIxODIzODgyMTM5"),
-  appId: atob("N2E5YzAzZWQ3Y2FkZGZlMWUyMGYzZQ=="),
-  measurementId: atob("Ry01RkJXWDVKQ1hK"),
+  apiKey: atob("QWlhU3lBaHpHMlpENTNnN0hBUFJWOGVhZ3JGdHk1RFNlYTZZVEE=").trim(),
+  authDomain: atob("dGVzdGRlc2lnbmNvdXJzZS5maXJlYmFzZWFwcC5jb20=").trim(),
+  databaseURL: atob("aHR0cHM6Ly90ZXN0ZGVzaWduY291cnNlLWRlZmF1bHQtcnRkYi5ldXJvcGUtd2VzdDEuZmlyZWJhc2VhcHAuY29t").trim(),
+  projectId: atob("dGVzdGRlc2lnbmNvdXJzZQ==").trim(),
+  storageBucket: atob("dGVzdGRlc2lnbmNvdXJzZS5hcHBzcG90LmNvbQ==").trim(),
+  messagingSenderId: atob("OTIxODIzODgyMTM5").trim(),
+  appId: atob("N2E5YzAzZWQ3Y2FkZGZlMWUyMGYzZQ==").trim(),
+  measurementId: atob("Ry01RkJXWDVKQ1hK").trim(),
 };
 
 // Log the decoded values for debugging
