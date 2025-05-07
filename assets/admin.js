@@ -62,9 +62,9 @@ fetch('data/courses.json')
   })
   .then(courses => {
     const courseDropdown = document.getElementById('course-or-modules');
-    const courseList = document.getElementById('admin-course-list');
+    //const courseList = document.getElementById('admin-course-list');
     courseDropdown.innerHTML = ''; // Clear existing options
-    courseList.innerHTML = ''; // Clear existing list
+    //courseList.innerHTML = ''; // Clear existing list
 
     courses.forEach(course => {
       // Create an option for the entire course in the dropdown
@@ -82,7 +82,7 @@ fetch('data/courses.json')
           ${course.modules.map(module => `<li>${module.name} - ${module.price}</li>`).join('')}
         </ul>
       `;
-      courseList.appendChild(courseListItem);
+      //courseList.appendChild(courseListItem);
 
       // Create options for each module in the dropdown
       course.modules.forEach(module => {
