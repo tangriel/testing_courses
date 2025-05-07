@@ -7,49 +7,24 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <h1>Certificate Validation</h1>
-  <form id="validation-form">
-    <label>
-      Certificate ID:
-      <input type="text" id="certificate-id">
-    </label>
-    <p>OR</p>
-    <label>
-      Name and Surname:
-      <input type="text" id="participant-name">
-    </label>
-    <label>
-      Course Name or Module Set:
-      <input type="text" id="course-name">
-    </label>
-    <button type="submit">Validate Certificate</button>
-  </form>
-  <div id="validation-result"></div>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyAhzG2ZD53g7HAPAV8eagrFty5DSea6YTA",
-      authDomain: "testdesigncourse.firebaseapp.com",
-      databaseURL: "https://testdesigncourse-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "testdesigncourse",
-      storageBucket: "testdesigncourse.firebasestorage.app",
-      messagingSenderId: "921823882139",
-      appId: "1:921823882139:web:7a9c03ed7caddfe1e20f3e",
-      measurementId: "G-5FBWX5JCXJ"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
-  <script src="assets/validate.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <header>
+    <h1>Certificate Validation</h1>
+  </header>
+  <section>
+    <form id="validation-form">
+      <label>
+        Certificate ID:
+        <input type="text" id="certificate-id">
+      </label>
+      <p>OR</p>
+      <label>
+        Name and Surname:
+        <input type="text" id="participant-name">
+      </label>
+      <button type="submit">Validate Certificate</button>
+    </form>
+    <div id="validation-result" style="display: none;"></div>
+  </section>
+  <script type="module" src="assets/validate.js"></script>
 </body>
 </html>
