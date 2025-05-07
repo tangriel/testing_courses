@@ -1,5 +1,5 @@
 // Certificate Generation Logic
-document.getElementById('certificate-form').addEventListener('submit', function (event) {
+document.getElementById('certificate-form').addEventListener('submit', async function (event) {
   event.preventDefault();
 
   const name = document.getElementById('participant-name').value.trim();
@@ -14,16 +14,21 @@ document.getElementById('certificate-form').addEventListener('submit', function 
 
   const selectedCoursesOrModules = selectedOptions.join(', '); // Combine all selected options into a string
 
-  // Generate unique certificate ID
-  (async () => {
-    const certificateId = await generateCertificateId(name, selectedCoursesOrModules);
-  })();
+  try {
+    // Generate unique certificate ID
+    const certificateId = await generateCertificateId(name, selectedOptions);
 
-  // Save certificate data
-  saveCertificateData(name, selectedCoursesOrModules, date, certificateId);
+    // Save certificate data
+    saveCertificateData(name, selectedCoursesOrModules, date, certificateId);
 
-  // Generate and download the certificate
-  generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId);
+    // Generate and download the certificate
+    generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId);
+
+    alert(`Certificate generated successfully!\nID: ${certificateId}`);
+  } catch (error) {
+    console.error('Error generating certificate:', error);
+    alert('An error occurred while generating the certificate. Please try again.');
+  }
 });
 
 async function generateCertificateId(name, selectedCoursesOrModules) {
@@ -46,39 +51,39 @@ async function generateCertificateId(name, selectedCoursesOrModules) {
 }
 
 function generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId) {
-const { jsPDF } = window.jspdf; // Assuming jsPDF is already added
-const doc = new jsPDF();
+  const { jsPDF } = window.jspdf; // Assuming jsPDF is already added
+  const doc = new jsPDF();
 
-// Certificate Template
-doc.setFont('helvetica', 'bold');
-doc.setFontSize(24);
-doc.text('Certificate of Completion', 105, 40, { align: 'center' });
+  // Certificate Template
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(24);
+  doc.text('Certificate of Completion', 105, 40, { align: 'center' });
 
-doc.setFont('helvetica', 'normal');
-doc.setFontSize(16);
-doc.text(`This is to certify that`, 105, 60, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(16);
+  doc.text(`This is to certify that`, 105, 60, { align: 'center' });
 
-doc.setFontSize(20);
-doc.text(name, 105, 80, { align: 'center' });
+  doc.setFontSize(20);
+  doc.text(name, 105, 80, { align: 'center' });
 
-doc.setFontSize(16);
-doc.text(`successfully completed the following:`, 105, 100, { align: 'center' });
+  doc.setFontSize(16);
+  doc.text(`successfully completed the following:`, 105, 100, { align: 'center' });
 
-// Split the selected courses/modules into lines and display them
-const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
-let startY = 120; // Initial Y position for the list
-coursesOrModulesArray.forEach((courseOrModule, index) => {
-  doc.text(`- ${courseOrModule}`, 105, startY + index * 10, { align: 'center' });
-});
+  // Split the selected courses/modules into lines and display them
+  const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
+  let startY = 120; // Initial Y position for the list
+  coursesOrModulesArray.forEach((courseOrModule, index) => {
+    doc.text(`- ${courseOrModule}`, 105, startY + index * 10, { align: 'center' });
+  });
 
-// Add completion date
-doc.text(`on ${new Date(date).toLocaleDateString()}`, 105, startY + coursesOrModulesArray.length * 10 + 10, { align: 'center' });
+  // Add completion date
+  doc.text(`on ${new Date(date).toLocaleDateString()}`, 105, startY + coursesOrModulesArray.length * 10 + 10, { align: 'center' });
 
-// Add Certificate ID
-doc.text(`Certificate ID: ${certificateId}`, 105, startY + coursesOrModulesArray.length * 10 + 30, { align: 'center' });
+  // Add Certificate ID
+  doc.text(`Certificate ID: ${certificateId}`, 105, startY + coursesOrModulesArray.length * 10 + 30, { align: 'center' });
 
-// Save the PDF
-doc.save(`${name}_${certificateId}_Certificate.pdf`);
+  // Save the PDF
+  doc.save(`${name}_${certificateId}_Certificate.pdf`);
 }
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
@@ -120,95 +125,85 @@ function saveCertificateData(name, selectedCoursesOrModules, date, certificateId
 
 // Function to load courses and populate the dropdown
 function loadCourses() {
-fetch('data/courses.json')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(courses => {
-    const courseDropdown = document.getElementById('course-or-modules');
-    courseDropdown.innerHTML = ''; // Clear existing options
+  fetch('data/courses.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(courses => {
+      const courseDropdown = document.getElementById('course-or-modules');
+      courseDropdown.innerHTML = ''; // Clear existing options
 
-    courses.forEach(course => {
-      // Create an option for the entire course in the dropdown
-      const courseOption = document.createElement('option');
-      courseOption.value = `Course: ${course.title}`;
-      courseOption.textContent = `Course: ${course.title}`;
-      courseDropdown.appendChild(courseOption);
+      courses.forEach(course => {
+        // Create an option for the entire course in the dropdown
+        const courseOption = document.createElement('option');
+        courseOption.value = `Course: ${course.title}`;
+        courseOption.textContent = `Course: ${course.title}`;
+        courseDropdown.appendChild(courseOption);
 
-      // Add the course to the course list
-      const courseListItem = document.createElement('li');
-      courseListItem.innerHTML = `
-        <strong>${course.title}</strong> - ${course.price}
-        <p>${course.description}</p>
-        <ul>
-          ${course.modules.map(module => `<li>${module.name} - ${module.price}</li>`).join('')}
-        </ul>
-      `;
-
-      // Create options for each module in the dropdown
-      course.modules.forEach(module => {
-        const moduleOption = document.createElement('option');
-        moduleOption.value = `Module: ${module.name}`;
-        moduleOption.textContent = `Module: ${module.name}`;
-        courseDropdown.appendChild(moduleOption);
+        // Create options for each module in the dropdown
+        course.modules.forEach(module => {
+          const moduleOption = document.createElement('option');
+          moduleOption.value = `Module: ${module.name}`;
+          moduleOption.textContent = `Module: ${module.name}`;
+          courseDropdown.appendChild(moduleOption);
+        });
       });
+    })
+    .catch(error => {
+      console.error('Error loading courses:', error);
+      alert('Failed to load courses. Please check your setup.');
     });
-  })
-  .catch(error => {
-    console.error('Error loading courses:', error);
-    alert('Failed to load courses. Please check your setup.');
-  });
 }
 
 // Function to add a new course or module
 function addCourseOrModule(event) {
-event.preventDefault();
+  event.preventDefault();
 
-const formData = new FormData(event.target);
-const title = formData.get('title');
-const description = formData.get('description');
-const price = formData.get('price');
-const modules = formData.get('modules');
+  const formData = new FormData(event.target);
+  const title = formData.get('title');
+  const description = formData.get('description');
+  const price = formData.get('price');
+  const modules = formData.get('modules');
 
-if (!title || !price) {
-  alert('Please fill in the required fields.');
-  return;
-}
+  if (!title || !price) {
+    alert('Please fill in the required fields.');
+    return;
+  }
 
-// Fetch existing courses, add the new course, and save back to the file
-fetch('data/courses.json')
-  .then(response => response.json())
-  .then(courses => {
-    const newCourse = {
-      id: courses.length + 1,
-      title,
-      description,
-      price,
-      modules: modules ? modules.split(',').map(module => ({ name: module.trim(), price: 'TBD' })) : []
-    };
+  // Fetch existing courses, add the new course, and save back to the file
+  fetch('data/courses.json')
+    .then(response => response.json())
+    .then(courses => {
+      const newCourse = {
+        id: courses.length + 1,
+        title,
+        description,
+        price,
+        modules: modules ? modules.split(',').map(module => ({ name: module.trim(), price: 'TBD' })) : []
+      };
 
-    courses.push(newCourse);
+      courses.push(newCourse);
 
-    // Save updated courses (this requires server-side handling, which is not available in static sites)
-    console.log('New course added:', newCourse);
-    alert('New course added successfully! (NOTE: Saving changes requires server-side support.)');
-  })
-  .catch(error => {
-    console.error('Error adding new course:', error);
-  });
+      // Save updated courses (this requires server-side handling, which is not available in static sites)
+      console.log('New course added:', newCourse);
+      alert('New course added successfully! (NOTE: Saving changes requires server-side support.)');
+    })
+    .catch(error => {
+      console.error('Error adding new course:', error);
+    });
 
-event.target.reset();
+  event.target.reset();
 }
 
 // Attach event listeners
 document.addEventListener('DOMContentLoaded', () => {
-loadCourses();
+  loadCourses();
 
-const addCourseForm = document.getElementById('add-course-form');
-if (addCourseForm) {
-  addCourseForm.addEventListener('submit', addCourseOrModule);
-}
+  const addCourseForm = document.getElementById('add-course-form');
+  if (addCourseForm) {
+    addCourseForm.addEventListener('submit', addCourseOrModule);
+  }
 });
