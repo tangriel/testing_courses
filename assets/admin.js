@@ -65,15 +65,14 @@ doc.text(`Certificate ID: ${certificateId}`, 105, startY + coursesOrModulesArray
 doc.save(`${name}_${certificateId}_Certificate.pdf`);
 }
 
-// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-import { getDatabase, ref, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
   apiKey: "AIzaSyAhzG2ZD53g7HAPAV8eagrFty5DSea6YTA",
   authDomain: "testdesigncourse.firebaseapp.com",
-  databaseURL: "https://testdesigncourse-default-rtdb.europe-west1.firebasedatabase.app", // Ensure this is included for Realtime Database
+  databaseURL: "https://testdesigncourse-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "testdesigncourse",
   storageBucket: "testdesigncourse.firebasestorage.app",
   messagingSenderId: "921823882139",
@@ -83,8 +82,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-const db = getDatabase();
+const db = getDatabase(app);
 
 function saveCertificateData(name, selectedCoursesOrModules, date, certificateId) {
   const certificateRef = ref(db, `certificates/${certificateId}`);
