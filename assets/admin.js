@@ -91,11 +91,11 @@ import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.16.0
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
-  apiKey: atob("QWlhU3lBaHpHMlpENTNnN0hBUFJWOGVhZ3JGdHk1RFNlYTZZVEE=").trim(),
+  apiKey: atob("QUl6YVN5QWh6RzJaRDUzZzdIQVBBVjhlYWdyRnR5NURTZWE2WVRB").trim(),
   authDomain: atob("dGVzdGRlc2lnbmNvdXJzZS5maXJlYmFzZWFwcC5jb20=").trim(),
-  databaseURL: atob("aHR0cHM6Ly90ZXN0ZGVzaWduY291cnNlLWRlZmF1bHQtcnRkYi5ldXJvcGUtd2VzdDEuZmlyZWJhc2VhcHAuY29t").trim(),
+  databaseURL: atob("aHR0cHM6Ly90ZXN0ZGVzaWduY291cnNlLWRlZmF1bHQtcnRkYi5ldXJvcGUtd2VzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHA=").trim(),
   projectId: atob("dGVzdGRlc2lnbmNvdXJzZQ==").trim(),
-  storageBucket: atob("dGVzdGRlc2lnbmNvdXJzZS5hcHBzcG90LmNvbQ==").trim(),
+  storageBucket: atob("dGVzdGRlc2lnbmNvdXJzZS5maXJlYmFzZXN0b3JhZ2UuYXBw").trim(),
   messagingSenderId: atob("OTIxODIzODgyMTM5").trim(),
   appId: atob("N2E5YzAzZWQ3Y2FkZGZlMWUyMGYzZQ==").trim(),
   measurementId: atob("Ry01RkJXWDVKQ1hK").trim(),
