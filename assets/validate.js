@@ -4,14 +4,14 @@ import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.16.0
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
-  apiKey: "AIzaSyAhzG2ZD53g7HAPAV8eagrFty5DSea6YTA",
-  authDomain: "testdesigncourse.firebaseapp.com",
-  databaseURL: "https://testdesigncourse-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "testdesigncourse",
-  storageBucket: "testdesigncourse.firebasestorage.app",
-  messagingSenderId: "921823882139",
-  appId: "7a9c03ed7caddfe1e20f3e",
-  measurementId: "G-5FBWX5JCXJ"
+  apiKey: atob("QUl6YVN5QWh6RzJaRDUzZzdIQVBBVjhlYWdyRnR5NURTZWE2WVRB").trim(),
+  authDomain: atob("dGVzdGRlc2lnbmNvdXJzZS5maXJlYmFzZWFwcC5jb20=").trim(),
+  databaseURL: atob("aHR0cHM6Ly90ZXN0ZGVzaWduY291cnNlLWRlZmF1bHQtcnRkYi5ldXJvcGUtd2VzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHA=").trim(),
+  projectId: atob("dGVzdGRlc2lnbmNvdXJzZQ==").trim(),
+  storageBucket: atob("dGVzdGRlc2lnbmNvdXJzZS5maXJlYmFzZXN0b3JhZ2UuYXBw").trim(),
+  messagingSenderId: atob("OTIxODIzODgyMTM5").trim(),
+  appId: atob("N2E5YzAzZWQ3Y2FkZGZlMWUyMGYzZQ==").trim(),
+  measurementId: atob("Ry01RkJXWDVKQ1hK").trim(),
 };
 
 // Initialize Firebase

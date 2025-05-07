@@ -101,9 +101,6 @@ const firebaseConfig = {
   measurementId: atob("Ry01RkJXWDVKQ1hK").trim(),
 };
 
-// Log the decoded values for debugging
-console.log(firebaseConfig);
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
