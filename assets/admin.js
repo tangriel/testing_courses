@@ -150,4 +150,4 @@ function loadCourses() {
     if (addCourseForm) {
       addCourseForm.addEventListener('submit', addCourseOrModule);
     }
-  });
+  })
