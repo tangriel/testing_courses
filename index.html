@@ -32,35 +32,32 @@
   <section id="schedule">
     <h2>Course Schedule</h2>
     <form id="sign-up-form" action="https://api.web3forms.com/submit" method="POST">
-        <!-- Web3Forms Access Key -->
-        <input type="hidden" name="access_key" value="11dc97ae-636d-4b68-a4dd-4c3d558d90ab">
-        <input type="text" name="honeypot" style="display:none;">
-        
-        <label>
-          Name:
-          <input type="text" name="name" required>
-        </label>
-        
-        <label>
-          Email:
-          <input type="email" name="email" required>
-        </label>
-        
-        <label>
-          Phone:
-          <input type="tel" name="phone" required>
-        </label>
-        
-        <label>
-          Select Course/Module:
-          <select name="course" required>
-            <option value="">Select...</option>
-            <!-- Dynamic options will be populated by JavaScript -->
-          </select>
-        </label>
-        
-        <button type="submit">Sign Up</button>
-      </form>
+      <!-- Web3Forms Access Key -->
+      <input type="hidden" name="access_key" value="11dc97ae-636d-4b68-a4dd-4c3d558d90ab">
+      <input type="text" name="honeypot" style="display:none;">
+      
+      <label>
+        Name:
+        <input type="text" name="name" required>
+      </label>
+      
+      <label>
+        Email:
+        <input type="email" name="email" required>
+      </label>
+      
+      <label>
+        Phone:
+        <input type="tel" name="phone" required>
+      </label>
+      
+      <label>
+        Select Courses/Modules:
+        <div id="course-or-modules-container"></div>
+      </label>
+      
+      <button type="submit">Sign Up</button>
+    </form>
   </section>
 
   <script src="assets/scripts.js"></script>

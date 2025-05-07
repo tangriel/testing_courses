@@ -1,19 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOM fully loaded and parsed.");
 
   // Function to load courses and populate the multi-select component
   function loadCourses() {
-    console.log("Fetching courses...");
     fetch('data/courses.json')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        console.log("Courses fetched successfully.");
         return response.json();
       })
       .then(courses => {
-        console.log("Parsed courses:", courses);
 
         const container = document.getElementById('course-or-modules-container');
         if (!container) {
@@ -24,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = ''; // Clear existing options
 
         courses.forEach(course => {
-          // Debugging each course
-          console.log("Processing course:", course);
 
           // Create a checkbox for the entire course
           const courseCheckbox = document.createElement('div');
@@ -39,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Create checkboxes for each module in the course
           course.modules.forEach(module => {
-            console.log("Processing module:", module);
             const moduleCheckbox = document.createElement('div');
             moduleCheckbox.innerHTML = `
               <label style="margin-left: 20px;">
@@ -51,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
-        console.log("Courses and modules successfully loaded into the container.");
       })
       .catch(error => {
         console.error('Error loading courses:', error);
