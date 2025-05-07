@@ -17,6 +17,9 @@ document.getElementById('certificate-form').addEventListener('submit', function 
   // Generate unique certificate ID
   const certificateId = generateCertificateId(name, selectedCoursesOrModules);
 
+  // Save certificate data
+  saveCertificateData(name, selectedCoursesOrModules, date, certificateId);
+
   // Generate and download the certificate
   generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId);
 });
@@ -43,7 +46,7 @@ doc.setFontSize(20);
 doc.text(name, 105, 80, { align: 'center' });
 
 doc.setFontSize(16);
-doc.text(`successfully completed the following`, 105, 100, { align: 'center' });
+doc.text(`successfully completed the following:`, 105, 100, { align: 'center' });
 
 // Split the selected courses/modules into lines and display them
 const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
@@ -59,7 +62,46 @@ doc.text(`on ${new Date(date).toLocaleDateString()}`, 105, startY + coursesOrMod
 doc.text(`Certificate ID: ${certificateId}`, 105, startY + coursesOrModulesArray.length * 10 + 30, { align: 'center' });
 
 // Save the PDF
-doc.save(`${name}_Certificate.pdf`);
+doc.save(`${name}_${certificateId}_Certificate.pdf`);
+}
+
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+import { getDatabase, ref, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+
+// Firebase configuration (replace with your own Firebase project configuration)
+const firebaseConfig = {
+  apiKey: "AIzaSyAhzG2ZD53g7HAPAV8eagrFty5DSea6YTA",
+  authDomain: "testdesigncourse.firebaseapp.com",
+  databaseURL: "https://testdesigncourse-default-rtdb.europe-west1.firebasedatabase.app", // Ensure this is included for Realtime Database
+  projectId: "testdesigncourse",
+  storageBucket: "testdesigncourse.firebasestorage.app",
+  messagingSenderId: "921823882139",
+  appId: "7a9c03ed7caddfe1e20f3e",
+  measurementId: "G-5FBWX5JCXJ"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase();
+
+function saveCertificateData(name, selectedCoursesOrModules, date, certificateId) {
+  const certificateRef = ref(db, `certificates/${certificateId}`);
+  const certificateData = {
+    name,
+    coursesOrModules: selectedCoursesOrModules,
+    date,
+    certificateId
+  };
+
+  set(certificateRef, certificateData)
+    .then(() => {
+      console.log('Certificate saved successfully');
+    })
+    .catch(error => {
+      console.error('Error saving certificate:', error);
+    });
 }
 
 // Function to load courses and populate the dropdown
