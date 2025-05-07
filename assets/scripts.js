@@ -1,34 +1,48 @@
-// Dynamically load courses and modules
-fetch('data/courses.json')
-  .then(response => response.json())
-  .then(courses => {
-    const courseList = document.getElementById('course-list');
-    const courseSelect = document.querySelector('select[name="course"]');
+// Function to load courses and populate the multi-select component
+function loadCourses() {
+  fetch('data/courses.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(courses => {
+      const container = document.getElementById('course-or-modules-container');
+      container.innerHTML = ''; // Clear existing options
 
-    courses.forEach(course => {
-      // Add course to list
-      const li = document.createElement('li');
-      li.innerHTML = `<strong>${course.title}</strong> - ${course.price}
-                      <p>${course.description}</p>
-                      <ul>
-                        ${course.modules.map(module => `<li>${module.name} - ${module.price}</li>`).join('')}
-                      </ul>`;
-      courseList.appendChild(li);
+      courses.forEach(course => {
+        // Create a checkbox for the entire course
+        const courseCheckbox = document.createElement('div');
+        courseCheckbox.innerHTML = `
+          <label>
+            <input type="checkbox" name="courses[]" value="Course: ${course.title}">
+            Course: ${course.title}
+          </label>
+        `;
+        container.appendChild(courseCheckbox);
 
-      // Add course and modules to dropdown
-      const courseOption = document.createElement('option');
-      courseOption.value = `Course: ${course.title}`;
-      courseOption.textContent = `Course: ${course.title}`;
-      courseSelect.appendChild(courseOption);
-
-      course.modules.forEach(module => {
-        const moduleOption = document.createElement('option');
-        moduleOption.value = `Module: ${module.name}`;
-        moduleOption.textContent = `Module: ${module.name} (${course.title})`;
-        courseSelect.appendChild(moduleOption);
+        // Create checkboxes for each module in the course
+        course.modules.forEach(module => {
+          const moduleCheckbox = document.createElement('div');
+          moduleCheckbox.innerHTML = `
+            <label style="margin-left: 20px;">
+              <input type="checkbox" name="courses[]" value="Module: ${module.name}">
+              Module: ${module.name}
+            </label>
+          `;
+          container.appendChild(moduleCheckbox);
+        });
       });
+    })
+    .catch(error => {
+      console.error('Error loading courses:', error);
+      alert('Failed to load courses. Please check your setup.');
     });
-  });
+}
+
+// Load courses when the page loads
+document.addEventListener('DOMContentLoaded', loadCourses);
 
 // Handle sign-up form submission
 document.getElementById('sign-up-form').addEventListener('submit', event => {
