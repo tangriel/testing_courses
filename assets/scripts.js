@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Translate course data if available
     loadCourses(lang);
+    populateCourseDropdown(lang);
   }
 
   // Populate Course Details as a Grid
@@ -82,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         courseInfoDiv.appendChild(courseHeader);
 
         const courseDescription = document.createElement('p');
-        courseDescription.textContent = description;
+        courseDescription.innerHTML = description;
         courseInfoDiv.appendChild(courseDescription);
 
         const courseDates = document.createElement('p');
