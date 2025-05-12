@@ -22,6 +22,11 @@ header {
   padding: 2rem 1rem; /* Add padding for top and bottom */
   position: relative;
   text-align: center; /* Center-align the header content */
+  display: flex; /* Enable flexbox for centering */
+  flex-direction: column; /* Arrange content in a column */
+  justify-content: center; /* Vertically center content */
+  align-items: center; /* Horizontally center content */
+  height: 200px; /* Fixed height to ensure consistent appearance */
 }
 
 header h1 {
