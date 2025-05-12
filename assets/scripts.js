@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Handle sign-up form submission
+  // Handle form submission
   document.getElementById('sign-up-form').addEventListener('submit', async (event) => {
     event.preventDefault(); // Prevent default form submission
 
