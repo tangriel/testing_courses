@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Function to load courses and populate the multi-select component
+  // Function to load courses and populate course details and multi-select component
   async function loadCourses() {
     try {
       const response = await fetch('data/courses.json');
@@ -8,35 +8,82 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const courses = await response.json();
-      const courseDropdown = document.getElementById('course-or-modules');
-      if (!courseDropdown) {
-        console.error("Element with ID 'course-or-modules' not found.");
-        return;
-      }
-
-      courseDropdown.innerHTML = ''; // Clear existing options
-
-      courses.forEach(course => {
-        // Create an option for the entire course
-        const courseOption = document.createElement('option');
-        courseOption.value = `Course: ${course.title}`;
-        courseOption.textContent = `Course: ${course.title}`;
-        courseDropdown.appendChild(courseOption);
-
-        // Create options for each module in the course
-        course.modules.forEach(module => {
-          const moduleOption = document.createElement('option');
-          moduleOption.value = `Module: ${module.name}`;
-          moduleOption.textContent = `Module: ${module.name} (Price: ${module.price})`;
-          courseDropdown.appendChild(moduleOption);
-        });
-      });
-
-      console.log("Multi-select dropdown populated successfully.");
+      populateCourseDetails(courses);
+      populateCourseDropdown(courses);
     } catch (error) {
       console.error('Error loading courses:', error);
       alert('Failed to load courses. Please check your setup.');
     }
+  }
+
+  // Populate course details in the "course-info" section
+  function populateCourseDetails(courses) {
+    const courseInfoDiv = document.getElementById('course-info');
+    if (!courseInfoDiv) {
+      console.error("Element with ID 'course-info' not found.");
+      return;
+    }
+
+    courseInfoDiv.innerHTML = ''; // Clear any existing content
+
+    courses.forEach(course => {
+      // Add course title, description, and price
+      const courseHeader = document.createElement('h3');
+      courseHeader.textContent = `${course.title} (${course.price})`;
+      courseInfoDiv.appendChild(courseHeader);
+
+      const courseDescription = document.createElement('p');
+      courseDescription.textContent = course.description;
+      courseInfoDiv.appendChild(courseDescription);
+
+      const courseDates = document.createElement('p');
+      courseDates.textContent = `Duration: ${course.start_date} to ${course.end_date}`;
+      courseInfoDiv.appendChild(courseDates);
+
+      // Add modules with details
+      const modulesHeader = document.createElement('h4');
+      modulesHeader.textContent = "Modules:";
+      courseInfoDiv.appendChild(modulesHeader);
+
+      const modulesList = document.createElement('ul');
+      course.modules.forEach(module => {
+        const moduleItem = document.createElement('li');
+        moduleItem.textContent = `${module.name} (${module.date} at ${module.time}) - ${module.price}`;
+        modulesList.appendChild(moduleItem);
+      });
+      courseInfoDiv.appendChild(modulesList);
+    });
+
+    console.log("Course details populated successfully.");
+  }
+
+  // Populate the multi-select dropdown with courses and modules
+  function populateCourseDropdown(courses) {
+    const courseDropdown = document.getElementById('course-or-modules');
+    if (!courseDropdown) {
+      console.error("Element with ID 'course-or-modules' not found.");
+      return;
+    }
+
+    courseDropdown.innerHTML = ''; // Clear existing options
+
+    courses.forEach(course => {
+      // Create an option for the entire course
+      const courseOption = document.createElement('option');
+      courseOption.value = `Course: ${course.title}`;
+      courseOption.textContent = `Course: ${course.title}`;
+      courseDropdown.appendChild(courseOption);
+
+      // Create options for each module in the course
+      course.modules.forEach(module => {
+        const moduleOption = document.createElement('option');
+        moduleOption.value = `Module: ${module.name}`;
+        moduleOption.textContent = `Module: ${module.name} (Price: ${module.price})`;
+        courseDropdown.appendChild(moduleOption);
+      });
+    });
+
+    console.log("Multi-select dropdown populated successfully.");
   }
 
   // Call the function to load courses
