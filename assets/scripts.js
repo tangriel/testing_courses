@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "about-description": `Hi, I'm Hanna Kaplun, a software testing expert with a proven track record in delivering high-quality training. My courses focus on practical, real-world testing techniques to help you excel. Connect with me on <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
       "course-details-title": "Course Details",
       "course-duration": "Duration:",
+      "course": "Course",
+      "module": "Module",
       "enrollment-title": "Sign Up for the Course",
       "label-name": "Name:",
       "label-email": "Email:",
@@ -23,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "about-description": `Привіт! Я Ганна Каплун, експерт з тестування програмного забезпечення з великим досвідом у навчанні. Мої курси зосереджені на практичних методах тестування, які допоможуть вам досягти успіху. Зв'яжіться зі мною через <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
       "course-details-title": "Деталі курсу",
       "course-duration": "Тривалість:",
+      "course": "Курс",
+      "module": "Модуль",
       "enrollment-title": "Запис на курс",
       "label-name": "Ім’я:",
       "label-email": "Електронна пошта:",
@@ -142,8 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create an option for the entire course
         const courseOption = document.createElement('option');
-        courseOption.value = `Course: ${title}`;
-        courseOption.textContent = `Course: ${title}`;
+        courseOption.value = `${translations[lang]["course"]}: ${title}`;
+        courseOption.textContent = `${translations[lang]["course"]}: ${title}`;
         courseDropdown.appendChild(courseOption);
 
         // Create options for each module in the course
@@ -151,8 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const name = lang === 'ua' ? module.name_ua : module.name;
 
           const moduleOption = document.createElement('option');
-          moduleOption.value = `Module: ${name}`;
-          moduleOption.textContent = `Module: ${name}`;
+          moduleOption.value = `${translations[lang]["module"]}: ${name}`;
+          moduleOption.textContent = `${translations[lang]["module"]}: ${name}`;
           courseDropdown.appendChild(moduleOption);
         });
       });
