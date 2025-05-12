@@ -10,12 +10,17 @@
   <header>
     <h1>Hanna Kaplun</h1>
     <p>Expert in software testing, delivering exceptional courses for aspiring professionals.</p>
+    <!-- Language Switcher -->
+    <div id="language-switcher">
+      <button data-lang="en">EN</button>
+      <button data-lang="uk">UK</button>
+    </div>
   </header>
 
   <!-- About Me Section -->
   <section id="about">
-    <h2>About Me</h2>
-    <p>
+    <h2 data-translate="about-title">About Me</h2>
+    <p data-translate="about-description">
       Hi, I'm Hanna Kaplun, a software testing expert with a proven track record in delivering
       high-quality training. My courses focus on practical, real-world testing techniques to help you excel.
       Connect with me on <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.
@@ -24,7 +29,7 @@
 
   <!-- Unified Course Details Section -->
   <section id="course-details">
-    <h2>Course Details</h2>
+    <h2 data-translate="course-details-title">Course Details</h2>
     <div id="course-info">
       <!-- Course information will be dynamically populated -->
     </div>
@@ -32,40 +37,40 @@
 
   <!-- Sign-Up Form -->
   <section id="enrollment">
-    <h2>Sign Up for the Course</h2>
+    <h2 data-translate="enrollment-title">Sign Up for the Course</h2>
     <form id="sign-up-form" action="https://api.web3forms.com/submit" method="POST">
       <!-- Web3Forms Access Key -->
       <input type="hidden" name="access_key" value="11dc97ae-636d-4b68-a4dd-4c3d558d90ab">
       <input type="text" name="honeypot" style="display:none;">
       
       <label>
-        Name:
+        <span data-translate="label-name">Name:</span>
         <input type="text" name="name" required>
       </label>
       
       <label>
-        Email:
+        <span data-translate="label-email">Email:</span>
         <input type="email" name="email" required>
       </label>
       
       <label>
-        Phone:
+        <span data-translate="label-phone">Phone:</span>
         <input type="tel" name="phone" required>
       </label>
       
       <label>
-        Select Courses/Modules:
+        <span data-translate="label-courses">Select Courses/Modules:</span>
         <select id="course-or-modules" name="courses[]" multiple required>
           <!-- Options will be dynamically populated -->
         </select>
       </label>
       
       <label>
-        Additional Comments or Questions:
+        <span data-translate="label-comments">Additional Comments or Questions:</span>
         <textarea name="comments" rows="5"></textarea>
       </label>
       
-      <button type="submit">Sign Up</button>
+      <button type="submit" data-translate="submit-button">Sign Up</button>
     </form>
   </section>
 
