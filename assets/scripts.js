@@ -1,6 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Function to load courses and populate course details and multi-select component
-  async function loadCourses() {
+  // Language Translations
+  const translations = {
+    en: {
+      "about-title": "About Me",
+      "about-description": "Hi, I'm Hanna Kaplun, a software testing expert with a proven track record in delivering high-quality training. My courses focus on practical, real-world testing techniques to help you excel. Connect with me on LinkedIn.",
+      "course-details-title": "Course Details",
+      "enrollment-title": "Sign Up for the Course",
+      "label-name": "Name:",
+      "label-email": "Email:",
+      "label-phone": "Phone:",
+      "label-courses": "Select Courses/Modules:",
+      "label-comments": "Additional Comments or Questions:",
+      "submit-button": "Sign Up"
+    },
+    ua: {
+      "about-title": "Про мене",
+      "about-description": "Привіт! Я Ганна Каплун, експерт з тестування програмного забезпечення з великим досвідом у навчанні. Мої курси зосереджені на практичних методах тестування, які допоможуть вам досягти успіху. Зв'яжіться зі мною через LinkedIn.",
+      "course-details-title": "Деталі курсу",
+      "enrollment-title": "Запис на курс",
+      "label-name": "Ім’я:",
+      "label-email": "Електронна пошта:",
+      "label-phone": "Телефон:",
+      "label-courses": "Виберіть курси/модулі:",
+      "label-comments": "Додаткові коментарі або питання:",
+      "submit-button": "Записатися"
+    }
+  };
+
+  // Language Switcher
+  const languageSwitcher = document.getElementById('language-switcher');
+  languageSwitcher.addEventListener('change', (event) => {
+    const lang = event.target.value;
+    updateLanguage(lang);
+  });
+
+  function updateLanguage(lang) {
+    document.querySelectorAll('[data-translate]').forEach(el => {
+      const key = el.getAttribute('data-translate');
+      el.textContent = translations[lang][key];
+    });
+
+    // Translate course data if available
+    loadCourses(lang);
+  }
+
+  // Populate Course Details as a Grid
+  async function loadCourses(lang = 'en') {
     try {
       const response = await fetch('data/courses.json');
       if (!response.ok) {
@@ -8,86 +53,103 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const courses = await response.json();
-      populateCourseDetails(courses);
-      populateCourseDropdown(courses);
+      const courseInfoDiv = document.getElementById('course-info');
+      if (!courseInfoDiv) {
+        console.error("Element with ID 'course-info' not found.");
+        return;
+      }
+
+      courseInfoDiv.innerHTML = ""; // Clear previous content
+
+      courses.forEach(course => {
+        // Translate course data if available
+        const title = lang === 'ua' ? course.title_ua : course.title;
+        const description = lang === 'ua' ? course.description_ua : course.description;
+
+        const courseHeader = document.createElement('h3');
+        courseHeader.textContent = `${title} (${course.price})`;
+        courseInfoDiv.appendChild(courseHeader);
+
+        const courseDescription = document.createElement('p');
+        courseDescription.textContent = description;
+        courseInfoDiv.appendChild(courseDescription);
+
+        const courseDates = document.createElement('p');
+        courseDates.textContent = `Duration: ${course.start_date} to ${course.end_date}`;
+        courseInfoDiv.appendChild(courseDates);
+
+        const moduleGrid = document.createElement('div');
+        moduleGrid.className = 'module-grid';
+
+        course.modules.forEach(module => {
+          const moduleRow = document.createElement('div');
+          moduleRow.className = 'module-row';
+
+          const name = document.createElement('span');
+          name.textContent = lang === 'ua' ? module.name_ua : module.name;
+
+          const dateTime = document.createElement('span');
+          dateTime.textContent = `${module.date}, ${module.time}`;
+
+          moduleRow.appendChild(name);
+          moduleRow.appendChild(dateTime);
+          moduleGrid.appendChild(moduleRow);
+        });
+
+        courseInfoDiv.appendChild(moduleGrid);
+      });
     } catch (error) {
       console.error('Error loading courses:', error);
       alert('Failed to load courses. Please check your setup.');
     }
   }
 
-  // Populate course details in the "course-info" section
-  function populateCourseDetails(courses) {
-    const courseInfoDiv = document.getElementById('course-info');
-    if (!courseInfoDiv) {
-      console.error("Element with ID 'course-info' not found.");
-      return;
-    }
+  // Populate the multi-select dropdown with courses and modules, excluding prices
+  async function populateCourseDropdown(lang = 'en') {
+    try {
+      const response = await fetch('data/courses.json');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    courseInfoDiv.innerHTML = ''; // Clear any existing content
+      const courses = await response.json();
+      const courseDropdown = document.getElementById('course-or-modules');
+      if (!courseDropdown) {
+        console.error("Element with ID 'course-or-modules' not found.");
+        return;
+      }
 
-    courses.forEach(course => {
-      // Add course title, description, and price
-      const courseHeader = document.createElement('h3');
-      courseHeader.textContent = `${course.title} (${course.price})`;
-      courseInfoDiv.appendChild(courseHeader);
+      courseDropdown.innerHTML = ''; // Clear existing options
 
-      const courseDescription = document.createElement('p');
-      courseDescription.textContent = course.description;
-      courseInfoDiv.appendChild(courseDescription);
+      courses.forEach(course => {
+        const title = lang === 'ua' ? course.title_ua : course.title;
 
-      const courseDates = document.createElement('p');
-      courseDates.textContent = `Duration: ${course.start_date} to ${course.end_date}`;
-      courseInfoDiv.appendChild(courseDates);
+        // Create an option for the entire course
+        const courseOption = document.createElement('option');
+        courseOption.value = `Course: ${title}`;
+        courseOption.textContent = `Course: ${title}`;
+        courseDropdown.appendChild(courseOption);
 
-      // Add modules with details
-      const modulesHeader = document.createElement('h4');
-      modulesHeader.textContent = "Modules:";
-      courseInfoDiv.appendChild(modulesHeader);
+        // Create options for each module in the course
+        course.modules.forEach(module => {
+          const name = lang === 'ua' ? module.name_ua : module.name;
 
-      const modulesList = document.createElement('ul');
-      course.modules.forEach(module => {
-        const moduleItem = document.createElement('li');
-        moduleItem.textContent = `${module.name} (${module.date} at ${module.time}) - ${module.price}`;
-        modulesList.appendChild(moduleItem);
+          const moduleOption = document.createElement('option');
+          moduleOption.value = `Module: ${name}`;
+          moduleOption.textContent = `Module: ${name}`;
+          courseDropdown.appendChild(moduleOption);
+        });
       });
-      courseInfoDiv.appendChild(modulesList);
-    });
 
-    console.log("Course details populated successfully.");
+      console.log("Multi-select dropdown populated successfully.");
+    } catch (error) {
+      console.error('Error loading courses for dropdown:', error);
+    }
   }
 
-  // Populate the multi-select dropdown with courses and modules
-  function populateCourseDropdown(courses) {
-    const courseDropdown = document.getElementById('course-or-modules');
-    if (!courseDropdown) {
-      console.error("Element with ID 'course-or-modules' not found.");
-      return;
-    }
-
-    courseDropdown.innerHTML = ''; // Clear existing options
-
-    courses.forEach(course => {
-      // Create an option for the entire course
-      const courseOption = document.createElement('option');
-      courseOption.value = `Course: ${course.title}`;
-      courseOption.textContent = `Course: ${course.title}`;
-      courseDropdown.appendChild(courseOption);
-
-      // Create options for each module in the course
-      course.modules.forEach(module => {
-        const moduleOption = document.createElement('option');
-        moduleOption.value = `Module: ${module.name}`;
-        moduleOption.textContent = `Module: ${module.name} (Price: ${module.price})`;
-        courseDropdown.appendChild(moduleOption);
-      });
-    });
-
-    console.log("Multi-select dropdown populated successfully.");
-  }
-
-  // Call the function to load courses
+  // Initial load
   loadCourses();
+  populateCourseDropdown();
 
   // Handle sign-up form submission
   document.getElementById('sign-up-form').addEventListener('submit', async (event) => {
