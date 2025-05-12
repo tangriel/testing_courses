@@ -2,9 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Language Translations
   const translations = {
     en: {
+      "header-title": "Hanna Kaplun",
+      "header-subtitle": "Expert in software testing, delivering exceptional courses for aspiring professionals.",
       "about-title": "About Me",
-      "about-description": "Hi, I'm Hanna Kaplun, a software testing expert with a proven track record in delivering high-quality training. My courses focus on practical, real-world testing techniques to help you excel. Connect with me on LinkedIn.",
+      "about-description": `Hi, I'm Hanna Kaplun, a software testing expert with a proven track record in delivering high-quality training. My courses focus on practical, real-world testing techniques to help you excel. Connect with me on <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
       "course-details-title": "Course Details",
+      "course-duration": "Duration:",
       "enrollment-title": "Sign Up for the Course",
       "label-name": "Name:",
       "label-email": "Email:",
@@ -14,9 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
       "submit-button": "Sign Up"
     },
     ua: {
+      "header-title": "Ганна Каплун",
+      "header-subtitle": "Експерт у тестуванні ПЗ, надаю високоякісні курси для майбутніх професіоналів.",
       "about-title": "Про мене",
-      "about-description": "Привіт! Я Ганна Каплун, експерт з тестування програмного забезпечення з великим досвідом у навчанні. Мої курси зосереджені на практичних методах тестування, які допоможуть вам досягти успіху. Зв'яжіться зі мною через LinkedIn.",
+      "about-description": `Привіт! Я Ганна Каплун, експерт з тестування програмного забезпечення з великим досвідом у навчанні. Мої курси зосереджені на практичних методах тестування, які допоможуть вам досягти успіху. Зв'яжіться зі мною через <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
       "course-details-title": "Деталі курсу",
+      "course-duration": "Тривалість:",
       "enrollment-title": "Запис на курс",
       "label-name": "Ім’я:",
       "label-email": "Електронна пошта:",
@@ -37,7 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateLanguage(lang) {
     document.querySelectorAll('[data-translate]').forEach(el => {
       const key = el.getAttribute('data-translate');
-      el.textContent = translations[lang][key];
+      // Allow HTML content for certain keys, such as "about-description"
+      if (key === "about-description") {
+        el.innerHTML = translations[lang][key];
+      } else {
+        el.textContent = translations[lang][key];
+      }
     });
 
     // Translate course data if available
@@ -75,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         courseInfoDiv.appendChild(courseDescription);
 
         const courseDates = document.createElement('p');
-        courseDates.textContent = `Duration: ${course.start_date} to ${course.end_date}`;
+        courseDates.textContent = `${translations[lang]["course-duration"]} ${course.start_date} to ${course.end_date}`;
         courseInfoDiv.appendChild(courseDates);
 
         const moduleGrid = document.createElement('div');

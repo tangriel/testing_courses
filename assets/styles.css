@@ -1,107 +1,35 @@
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-  }
-  
-  header {
-    background: #333;
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
-  }
-  
-  header h1 {
-    margin: 0;
-  }
-  
-  section {
-    margin: 2rem auto;
-    padding: 1rem;
-    max-width: 800px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  section h2 {
-    margin-top: 0;
-  }
-  
-  label {
-    display: block;
-    margin-top: 1rem;
-    font-weight: bold;
-  }
-  
-  input, select, textarea, button {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    background: #333;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-top: 1rem;
-  }
-  
-  button:hover {
-    background: #555;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  ul li {
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  #certificate-output {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: #eefaf1;
-    border: 1px solid #adebad;
-    border-radius: 5px;
-  }
-  
-  #error-message {
-    color: red;
-    font-size: 0.9em;
-    margin-top: 0.5rem;
-  }
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
 
-  select[multiple] {
-    width: 100%;
-    height: auto;
-    min-height: 150px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  
-  select[multiple] option {
-    padding: 5px;
-  }
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
 
-/* Language Switcher */
+/* Header Styles */
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header p {
+  margin: 0.5rem 0 0;
+}
+
 #language-switcher-container {
   position: absolute;
   top: 10px;
@@ -110,6 +38,95 @@ body {
 
 #language-switcher {
   padding: 5px;
+}
+
+/* Section Styles */
+section {
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+  margin-top: 0;
+}
+
+/* Form Elements */
+label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+input,
+select,
+textarea,
+button {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background: #555;
+}
+
+select[multiple] {
+  width: 100%;
+  height: auto;
+  min-height: 150px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+select[multiple] option {
+  padding: 5px;
+}
+
+/* Lists */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Output and Error Messages */
+#certificate-output {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #eefaf1;
+  border: 1px solid #adebad;
+  border-radius: 5px;
+}
+
+#error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 0.5rem;
 }
 
 /* Module Grid */
@@ -129,4 +146,13 @@ body {
 .module-row span {
   padding: 5px;
   border-bottom: 1px solid #ddd;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
 }
