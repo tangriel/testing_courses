@@ -56,8 +56,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Translate course data if available
+    translateHeader(lang);
     loadCourses(lang);
     populateCourseDropdown(lang);
+  }
+
+  function translateHeader(lang) {
+    const headerTitle = document.querySelector("header h1");
+    const headerSubtitle = document.querySelector("header p");
+
+    if (headerTitle && headerSubtitle) {
+      headerTitle.textContent = translations[lang]["header-title"];
+      headerSubtitle.textContent = translations[lang]["header-subtitle"];
+    }
   }
 
   // Populate Course Details as a Grid
@@ -167,10 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Initial load
-  loadCourses();
-  populateCourseDropdown();
-
   // Handle sign-up form submission
   document.getElementById('sign-up-form').addEventListener('submit', async (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -229,4 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Something went wrong. Please try again later.');
     }
   });
+
+  // Initial load
+  updateLanguage("en"); // Default to English
 });
