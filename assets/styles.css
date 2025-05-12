@@ -12,19 +12,16 @@ body {
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem; /* Add consistent padding to all containers */
 }
 
 /* Header Styles */
 header {
   background: #333;
   color: #fff;
-  padding: 1rem 0;
+  padding: 2rem 1rem; /* Add padding for top and bottom */
   position: relative;
-}
-
-header .container {
-  text-align: center;
+  text-align: center; /* Center-align the header content */
 }
 
 header h1 {
@@ -50,7 +47,7 @@ header p {
 /* Section Styles */
 section {
   margin: 2rem auto;
-  padding: 1rem;
+  padding: 1.5rem; /* Add padding inside sections */
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -58,6 +55,7 @@ section {
 
 section h2 {
   margin-top: 0;
+  text-align: center; /* Center-align section headings */
 }
 
 /* Form Elements */
@@ -72,7 +70,7 @@ select,
 textarea,
 button {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem; /* Increase padding for better usability */
   margin-top: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -85,6 +83,7 @@ button {
   border: none;
   cursor: pointer;
   margin-top: 1rem;
+  font-size: 1rem; /* Increase button font size */
 }
 
 button:hover {
@@ -99,7 +98,7 @@ select[multiple] {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-  font-size: 16px;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 
