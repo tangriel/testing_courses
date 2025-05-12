@@ -88,10 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
           const name = document.createElement('span');
           name.textContent = lang === 'ua' ? module.name_ua : module.name;
 
+          const price = document.createElement('span');
+          price.textContent = module.price;
+
           const dateTime = document.createElement('span');
           dateTime.textContent = `${module.date}, ${module.time}`;
 
           moduleRow.appendChild(name);
+          moduleRow.appendChild(price);
           moduleRow.appendChild(dateTime);
           moduleGrid.appendChild(moduleRow);
         });
