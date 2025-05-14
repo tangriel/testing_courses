@@ -31,6 +31,25 @@ document.getElementById('certificate-form').addEventListener('submit', async fun
   }
 });
 
+async function generateCertificateId(name, selectedCoursesOrModules) {
+  // Concatenate name and selectedCoursesOrModules into a single string
+  const inputString = `${name}:${selectedCoursesOrModules.join(',')}`;
+
+  // Encode the string into bytes
+  const encoder = new TextEncoder();
+  const data = encoder.encode(inputString);
+
+  // Generate a SHA-256 hash
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+  // Convert the hash buffer into a hex string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+
+  // Return a shortened version of the hash (first 12 characters)
+  return hashHex.substring(0, 12);
+}
+
 function generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId) {
   const { jsPDF } = window.jspdf; // Assuming jsPDF is already added
   const doc = new jsPDF();
