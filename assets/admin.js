@@ -54,36 +54,81 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
   const { jsPDF } = window.jspdf; // Assuming jsPDF is already added
   const doc = new jsPDF();
 
-  // Certificate Template
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(24);
-  doc.text('Certificate of Completion', 105, 40, { align: 'center' });
+  // Certificate Dimensions
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(16);
-  doc.text(`This is to certify that`, 105, 60, { align: 'center' });
+  // Add Logo
+  const logoImg = new Image();
+  logoImg.src = 'assets/logo.png'; // Path to the logo
+  logoImg.onload = function () {
+    const logoWidth = 60; // Adjusted width
+    const logoHeight = (logoImg.height / logoImg.width) * logoWidth; // Maintain aspect ratio
+    doc.addImage(logoImg, 'PNG', (pageWidth - logoWidth) / 2, 10, logoWidth, logoHeight);
 
-  doc.setFontSize(20);
-  doc.text(name, 105, 80, { align: 'center' });
+    // Certificate Title
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(28);
+    doc.text('Certificate of Completion', pageWidth / 2, 60, { align: 'center' });
 
-  doc.setFontSize(16);
-  doc.text(`successfully completed the following:`, 105, 100, { align: 'center' });
+    // Trainer's Name (under the title)
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(14);
+    doc.text('Presented by Hanna Kaplun', pageWidth / 2, 70, { align: 'center' });
 
-  // Split the selected courses/modules into lines and display them
-  const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
-  let startY = 120; // Initial Y position for the list
-  coursesOrModulesArray.forEach((courseOrModule, index) => {
-    doc.text(`- ${courseOrModule}`, 105, startY + index * 10, { align: 'center' });
-  });
+    // Certificate Body Text
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(16);
+    doc.text(`This is to certify that`, pageWidth / 2, 90, { align: 'center' });
 
-  // Add completion date
-  doc.text(`on ${new Date(date).toLocaleDateString()}`, 105, startY + coursesOrModulesArray.length * 10 + 10, { align: 'center' });
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(22);
+    doc.text(name, pageWidth / 2, 110, { align: 'center' });
 
-  // Add Certificate ID
-  doc.text(`Certificate ID: ${certificateId}`, 105, startY + coursesOrModulesArray.length * 10 + 30, { align: 'center' });
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(16);
+    doc.text(`successfully completed the following:`, pageWidth / 2, 130, { align: 'center' });
 
-  // Save the PDF
-  doc.save(`${name}_${certificateId}_Certificate.pdf`);
+    // List Courses/Modules
+    const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
+    let startY = 150; // Initial Y position for the list
+    coursesOrModulesArray.forEach((courseOrModule, index) => {
+      doc.text(`- ${courseOrModule}`, pageWidth / 2, startY + index * 10, { align: 'center' });
+    });
+
+    // Completion Date
+    doc.text(`on ${new Date(date).toLocaleDateString()}`, pageWidth / 2, startY + coursesOrModulesArray.length * 10 + 10, {
+      align: 'center',
+    });
+
+    // Certificate ID
+    doc.setFontSize(12);
+    doc.text(`Certificate ID: ${certificateId}`, pageWidth / 2, startY + coursesOrModulesArray.length * 10 + 30, {
+      align: 'center',
+    });
+
+    // Add Signature
+    const signatureImg = new Image();
+    signatureImg.src = 'assets/signature.png'; // Path to the signature
+    signatureImg.onload = function () {
+      const signatureWidth = 50; // Adjusted width
+      const signatureHeight = (signatureImg.height / signatureImg.width) * signatureWidth; // Maintain aspect ratio
+      const signatureX = pageWidth - signatureWidth - 20; // Right alignment
+      const signatureY = pageHeight - signatureHeight - 30; // Bottom alignment
+
+      // Add the signature image
+      doc.addImage(signatureImg, 'PNG', signatureX, signatureY, signatureWidth, signatureHeight);
+
+      // Add a line below the signature
+      const lineY = signatureY + signatureHeight + 5; // Position the line slightly below the signature
+      doc.setDrawColor(0); // Black color
+      doc.setLineWidth(0.5); // Thin line
+      doc.line(signatureX, lineY, signatureX + signatureWidth, lineY); // Draw the line
+
+      // Save the PDF
+      doc.save(`${name}_${certificateId}_Certificate.pdf`);
+    };
+  };
 }
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
