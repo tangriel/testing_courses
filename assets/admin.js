@@ -31,25 +31,6 @@ document.getElementById('certificate-form').addEventListener('submit', async fun
   }
 });
 
-async function generateCertificateId(name, selectedCoursesOrModules) {
-  // Concatenate name and selectedCoursesOrModules into a single string
-  const inputString = `${name}:${selectedCoursesOrModules.join(',')}`;
-
-  // Encode the string into bytes
-  const encoder = new TextEncoder();
-  const data = encoder.encode(inputString);
-
-  // Generate a SHA-256 hash
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-
-  // Convert the hash buffer into a hex string
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-
-  // Return a shortened version of the hash (first 12 characters)
-  return hashHex.substring(0, 12);
-}
-
 function generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId) {
   const { jsPDF } = window.jspdf; // Assuming jsPDF is already added
   const doc = new jsPDF();
@@ -115,28 +96,31 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
     const signatureImg = new Image();
     signatureImg.src = 'assets/signature.png'; // Path to the signature
     signatureImg.onload = function () {
-      const signatureWidth = 25; // Further reduced width for a smaller signature
+      const signatureWidth = 25; // Reduced width for a smaller signature
       const signatureHeight = (signatureImg.height / signatureImg.width) * signatureWidth; // Maintain aspect ratio
-      const signatureX = (pageWidth / 2) - (signatureWidth / 2); // Center the signature horizontally over the line
-      const signatureY = pageHeight - signatureHeight - 30; // Position closer to the bottom
+
+      // Positioning Elements
+      const centerX = pageWidth / 2; // Horizontal center of the page
+      const signatureY = pageHeight - signatureHeight - 30; // Signature closer to the bottom
+      const lineY = signatureY + signatureHeight + 3; // Line slightly below the signature
+      const lineWidth = signatureWidth + 40; // Line length (longer than the signature)
 
       // Add the signature image
+      const signatureX = centerX - (signatureWidth / 2); // Center the signature over the line
       doc.addImage(signatureImg, 'PNG', signatureX, signatureY, signatureWidth, signatureHeight);
 
-      // Add a line only under the signature
-      const lineY = signatureY + signatureHeight + 3; // Position the line slightly below the signature
-      const lineStartX = signatureX - 20; // Shorter line extending to the left
-      const lineEndX = signatureX + signatureWidth + 20; // Shorter line extending to the right
+      // Add a centered line below the signature
+      const lineStartX = centerX - (lineWidth / 2); // Start point of the line
+      const lineEndX = centerX + (lineWidth / 2); // End point of the line
       doc.setDrawColor(0); // Black color
       doc.setLineWidth(0.2); // Thinner line
       doc.line(lineStartX, lineY, lineEndX, lineY); // Draw the line
 
-      // Add "Trainer: Hanna Kaplun" text to the left of the line
+      // Add "Trainer: Hanna Kaplun" text, centered with the line
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(12);
-      const trainerTextX = lineStartX - 50; // Position to the left of the line
-      const trainerTextY = lineY - 2; // Align text vertically with the line
-      doc.text('Trainer: Hanna Kaplun', trainerTextX, trainerTextY, { align: 'left' });
+      const trainerTextY = lineY + 5; // Position the text slightly below the line
+      doc.text('Trainer: Hanna Kaplun', centerX, trainerTextY, { align: 'center' });
 
       // Save the PDF
       doc.save(`${name}_${certificateId}_Certificate.pdf`);
