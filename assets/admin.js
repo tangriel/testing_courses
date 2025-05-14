@@ -118,7 +118,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
       const signatureWidth = 25; // Further reduced width for a smaller signature
       const signatureHeight = (signatureImg.height / signatureImg.width) * signatureWidth; // Maintain aspect ratio
       const signatureX = (pageWidth / 2) - (signatureWidth / 2); // Center the signature horizontally over the line
-      const signatureY = pageHeight - signatureHeight - 50; // Position closer to the bottom
+      const signatureY = pageHeight - signatureHeight - 30; // Position closer to the bottom
 
       // Add the signature image
       doc.addImage(signatureImg, 'PNG', signatureX, signatureY, signatureWidth, signatureHeight);
@@ -131,11 +131,11 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
       doc.setLineWidth(0.2); // Thinner line
       doc.line(lineStartX, lineY, lineEndX, lineY); // Draw the line
 
-      // Add "Trainer: Hanna Kaplun" text to the left of the signature
+      // Add "Trainer: Hanna Kaplun" text to the left of the line
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(12);
-      const trainerTextX = lineStartX - 40; // Position to the left of the line
-      const trainerTextY = signatureY + signatureHeight / 2; // Vertically align with the signature
+      const trainerTextX = lineStartX - 50; // Position to the left of the line
+      const trainerTextY = lineY - 2; // Align text vertically with the line
       doc.text('Trainer: Hanna Kaplun', trainerTextX, trainerTextY, { align: 'left' });
 
       // Save the PDF
