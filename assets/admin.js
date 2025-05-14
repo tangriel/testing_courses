@@ -96,9 +96,15 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
     // List Courses/Modules
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
     let startY = 135; // Initial Y position for the list
-    coursesOrModulesArray.forEach((courseOrModule, index) => {
-      doc.text(`- ${courseOrModule}`, pageWidth / 2, startY + index * 10, { align: 'center' });
-    });
+    if (coursesOrModulesArray.length === 1) {
+      // Single value, no hyphen
+      doc.text(coursesOrModulesArray[0], pageWidth / 2, startY, { align: 'center' });
+    } else {
+      // Multiple values, include hyphen
+      coursesOrModulesArray.forEach((courseOrModule, index) => {
+        doc.text(`- ${courseOrModule}`, pageWidth / 2, startY + index * 10, { align: 'center' });
+      });
+    }
 
     // Completion Date
     doc.text(`on ${new Date(date).toLocaleDateString()}`, pageWidth / 2, startY + coursesOrModulesArray.length * 10 + 10, {
