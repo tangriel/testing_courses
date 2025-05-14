@@ -62,35 +62,40 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
   doc.setFillColor(240, 255, 240); // Very light green
   doc.rect(0, 0, pageWidth, pageHeight, 'F'); // Fill the entire page with the color
 
+  // Add Dark Green Border
+  doc.setDrawColor(34, 139, 34); // Darker green
+  doc.setLineWidth(1.5);
+  doc.rect(10, 10, pageWidth - 20, pageHeight - 20); // Draw a rectangle for the border
+
   // Add Logo on Top
   const logoImg = new Image();
   logoImg.src = 'assets/logo.png'; // Path to the logo
   logoImg.onload = function () {
     const logoWidth = 60; // Adjusted width
     const logoHeight = (logoImg.height / logoImg.width) * logoWidth; // Maintain aspect ratio
-    doc.addImage(logoImg, 'PNG', (pageWidth - logoWidth) / 2, 10, logoWidth, logoHeight);
+    doc.addImage(logoImg, 'PNG', (pageWidth - logoWidth) / 2, 15, logoWidth, logoHeight);
 
     // Certificate Title
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(28);
-    doc.text('Certificate of Completion', pageWidth / 2, 45, { align: 'center' });
+    doc.text('Certificate of Completion', pageWidth / 2, 60, { align: 'center' });
 
     // Certificate Body Text
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(16);
-    doc.text(`This is to certify that`, pageWidth / 2, 70, { align: 'center' });
+    doc.text(`This is to certify that`, pageWidth / 2, 75, { align: 'center' });
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(22);
-    doc.text(name, pageWidth / 2, 90, { align: 'center' });
+    doc.text(name, pageWidth / 2, 95, { align: 'center' });
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(16);
-    doc.text(`successfully completed the following:`, pageWidth / 2, 110, { align: 'center' });
+    doc.text(`successfully completed the following:`, pageWidth / 2, 115, { align: 'center' });
 
     // List Courses/Modules
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
-    let startY = 130; // Initial Y position for the list
+    let startY = 135; // Initial Y position for the list
     coursesOrModulesArray.forEach((courseOrModule, index) => {
       doc.text(`- ${courseOrModule}`, pageWidth / 2, startY + index * 10, { align: 'center' });
     });
@@ -110,27 +115,27 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
     const signatureImg = new Image();
     signatureImg.src = 'assets/signature.png'; // Path to the signature
     signatureImg.onload = function () {
-      const signatureWidth = 35; // Reduced width for a smaller signature
+      const signatureWidth = 25; // Further reduced width for a smaller signature
       const signatureHeight = (signatureImg.height / signatureImg.width) * signatureWidth; // Maintain aspect ratio
       const signatureX = (pageWidth / 2) - (signatureWidth / 2); // Center the signature horizontally over the line
-      const signatureY = pageHeight - signatureHeight - 40; // Bottom alignment
+      const signatureY = pageHeight - signatureHeight - 50; // Position closer to the bottom
 
       // Add the signature image
       doc.addImage(signatureImg, 'PNG', signatureX, signatureY, signatureWidth, signatureHeight);
 
-      // Add a longer line below the signature
+      // Add a line only under the signature
       const lineY = signatureY + signatureHeight + 3; // Position the line slightly below the signature
-      const lineStartX = signatureX - 40; // Extend the line to the left
-      const lineEndX = signatureX + signatureWidth + 40; // Extend the line to the right
+      const lineStartX = signatureX - 20; // Shorter line extending to the left
+      const lineEndX = signatureX + signatureWidth + 20; // Shorter line extending to the right
       doc.setDrawColor(0); // Black color
       doc.setLineWidth(0.2); // Thinner line
       doc.line(lineStartX, lineY, lineEndX, lineY); // Draw the line
 
-      // Add "Trainer: Hanna Kaplun" to the left of the line
+      // Add "Trainer: Hanna Kaplun" text to the left of the signature
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(12);
-      const trainerTextX = lineStartX; // Position to the left of the line
-      const trainerTextY = lineY - 5; // Vertically align slightly above the line
+      const trainerTextX = lineStartX - 40; // Position to the left of the line
+      const trainerTextY = signatureY + signatureHeight / 2; // Vertically align with the signature
       doc.text('Trainer: Hanna Kaplun', trainerTextX, trainerTextY, { align: 'left' });
 
       // Save the PDF
