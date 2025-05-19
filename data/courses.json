@@ -2,16 +2,16 @@
   {
     "id": 1,
     "title": "Test Design with Human Touch",
-    "title_ua": "Тест-дизайн з людським підходом",
-    "description": "Learn the art of test design with practical, real-world techniques.",
-    "description_ua": "Вивчіть мистецтво тест-дизайну з практичними, реальними підходами.",
+    "title_ua": "Тест-дизайн по-людськи",
+    "description": "Master the art of test design with tools and human intelligence.",
+    "description_ua": "Вивчіть мистецтво тест-дизайну із застосуванням інструментів та людського розуму.",
     "price": "200 USD",
     "start_date": "2025-06-01",
     "end_date": "2025-06-30",
     "modules": [
       {
         "name": "Basic Test Design Techniques",
-        "name_ua": "Основні техніки тест-дизайну",
+        "name_ua": "Базові техніки тест-дизайну",
         "price": "50 USD",
         "date": "2025-06-03",
         "time": "10:00 AM"
@@ -25,7 +25,7 @@
       },
       {
         "name": "State-Transition",
-        "name_ua": "Перехід станів",
+        "name_ua": "Стани та переходи",
         "price": "50 USD",
         "date": "2025-06-17",
         "time": "10:00 AM"
