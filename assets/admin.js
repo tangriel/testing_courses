@@ -52,81 +52,90 @@ async function generateCertificateId(name, selectedCoursesOrModules) {
 
 function generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId) {
   const { jsPDF } = window.jspdf; // Assuming jsPDF is already added
-  const doc = new jsPDF();
+  const doc = new jsPDF('landscape', 'mm', 'a4'); // A4 page in landscape
 
   // Certificate Dimensions
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
 
-  // Add Light Green Background
-  doc.setFillColor(240, 255, 240); // Very light green
-  doc.rect(0, 0, pageWidth, pageHeight, 'F'); // Fill the entire page with the color
+  // Add Frame Background Image
+  const frameImg = new Image();
+  frameImg.src = 'assets/frame.jpeg'; // Path to the frame image
+  frameImg.onload = function () {
+    doc.addImage(frameImg, 'JPEG', 0, 0, pageWidth, pageHeight); // Cover the entire page with the background image
 
-  // Add Dark Green Border
-  doc.setDrawColor(34, 139, 34); // Darker green
-  doc.setLineWidth(1.5);
-  doc.rect(10, 10, pageWidth - 20, pageHeight - 20); // Draw a rectangle for the border
+    // Calculate Vertical Centering
+    let contentHeight = 0;
+    const lineHeight = 10;
+    const textLines = [
+      'Certificate of Completion',
+      `This is to certify that`,
+      name,
+      `successfully completed the following:`,
+      ...selectedCoursesOrModules.split(', '),
+      `on ${new Date(date).toLocaleDateString()}`,
+      `Certificate ID: ${certificateId}`,
+    ];
 
-  // Add Logo on Top
-  const logoImg = new Image();
-  logoImg.src = 'assets/logo.png'; // Path to the logo
-  logoImg.onload = function () {
-    const logoWidth = 60; // Adjusted width
-    const logoHeight = (logoImg.height / logoImg.width) * logoWidth; // Maintain aspect ratio
-    doc.addImage(logoImg, 'PNG', (pageWidth - logoWidth) / 2, 15, logoWidth, logoHeight);
+    textLines.forEach((line, index) => {
+      contentHeight += (index === 2 ? 12 : lineHeight); // Larger font size for name
+    });
 
-    // Certificate Title
+    const startY = (pageHeight - contentHeight) / 2;
+
+    // Add Certificate Content
+    let currentY = startY;
+
+    // Title
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(28);
-    doc.text('Certificate of Completion', pageWidth / 2, 60, { align: 'center' });
+    doc.text('Certificate of Completion', pageWidth / 2, currentY, { align: 'center' });
+    currentY += lineHeight + 5;
 
-    // Certificate Body Text
+    // Body Text
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(16);
-    doc.text(`This is to certify that`, pageWidth / 2, 75, { align: 'center' });
+    doc.text(`This is to certify that`, pageWidth / 2, currentY, { align: 'center' });
+    currentY += lineHeight;
 
+    // Name
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(22);
-    doc.text(name, pageWidth / 2, 95, { align: 'center' });
+    doc.text(name, pageWidth / 2, currentY, { align: 'center' });
+    currentY += lineHeight + 2;
 
+    // Body Text
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(16);
-    doc.text(`successfully completed the following:`, pageWidth / 2, 115, { align: 'center' });
+    doc.text(`successfully completed the following:`, pageWidth / 2, currentY, { align: 'center' });
+    currentY += lineHeight;
 
-    // List Courses/Modules
+    // Courses/Modules
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
-    let startY = 135; // Initial Y position for the list
-    if (coursesOrModulesArray.length === 1) {
-      // Single value, no hyphen
-      doc.text(coursesOrModulesArray[0], pageWidth / 2, startY, { align: 'center' });
-    } else {
-      // Multiple values, include hyphen
-      coursesOrModulesArray.forEach((courseOrModule, index) => {
-        doc.text(`- ${courseOrModule}`, pageWidth / 2, startY + index * 10, { align: 'center' });
-      });
-    }
+    coursesOrModulesArray.forEach((courseOrModule) => {
+      doc.text(courseOrModule, pageWidth / 2, currentY, { align: 'center' });
+      currentY += lineHeight;
+    });
 
     // Completion Date
-    doc.text(`on ${new Date(date).toLocaleDateString()}`, pageWidth / 2, startY + coursesOrModulesArray.length * 10 + 10, {
-      align: 'center',
-    });
+    doc.text(`on ${new Date(date).toLocaleDateString()}`, pageWidth / 2, currentY, { align: 'center' });
+    currentY += lineHeight;
 
     // Certificate ID
     doc.setFontSize(12);
-    doc.text(`Certificate ID: ${certificateId}`, pageWidth / 2, startY + coursesOrModulesArray.length * 10 + 30, {
-      align: 'center',
-    });
+    doc.text(`Certificate ID: ${certificateId}`, pageWidth / 2, currentY, { align: 'center' });
+    currentY += lineHeight;
 
     // Add Signature
     const signatureImg = new Image();
     signatureImg.src = 'assets/signature.png'; // Path to the signature
     signatureImg.onload = function () {
       const signatureWidth = 25; // Reduced width for a smaller signature
-      const signatureHeight = (signatureImg.height / signatureImg.width) * signatureWidth; // Maintain aspect ratio
+      const signatureHeight = (signatureImg.height / signatureImg.width) * signatureWidth;
 
       // Positioning Elements
       const centerX = pageWidth / 2; // Horizontal center of the page
-      const signatureY = pageHeight - signatureHeight - 30; // Signature closer to the bottom
+      const signatureY = currentY + 10; // Signature below the certificate ID
       const lineY = signatureY + signatureHeight + 3; // Line slightly below the signature
       const lineWidth = signatureWidth + 40; // Line length (longer than the signature)
 
