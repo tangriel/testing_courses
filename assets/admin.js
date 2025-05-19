@@ -106,7 +106,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
 
     // Body Text
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(16);
+    doc.setFontSize(14);
     doc.text(`successfully completed the following:`, pageWidth / 2, currentY, { align: 'center' });
     currentY += lineHeight;
 
