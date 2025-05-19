@@ -106,11 +106,12 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
 
     // Body Text
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(14);
+    doc.setFontSize(16);
     doc.text(`successfully completed the following:`, pageWidth / 2, currentY, { align: 'center' });
     currentY += lineHeight;
 
     // Courses/Modules
+    doc.setFontSize(12);
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
     coursesOrModulesArray.forEach((courseOrModule) => {
       doc.text(courseOrModule, pageWidth / 2, currentY, { align: 'center' });
