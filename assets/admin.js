@@ -115,7 +115,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
     coursesOrModulesArray.forEach((courseOrModule) => {
       doc.text(courseOrModule, pageWidth / 2, currentY, { align: 'center' });
-      currentY += lineHeight-5;
+      currentY += lineHeight / 2;
     });
 
     // Completion Date
