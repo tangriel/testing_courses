@@ -125,7 +125,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
       const columnGap = 40; // Horizontal gap between columns
       const columnWidth = (pageWidth - columnGap) / 2 - 20; // Width of each column with padding for safety
       const centerX = pageWidth / 2; // Center of the page
-      const columnStartXLeft = centerX - columnGap / 2 - columnWidth; // Left column starting X position
+      const columnStartXLeft = centerX - columnWidth - columnGap / 2; // Left column starting X position
       const columnStartXRight = centerX + columnGap / 2; // Right column starting X position
       let currentYLeft = currentY; // Y position for the left column
       let currentYRight = currentY; // Y position for the right column
