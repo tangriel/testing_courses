@@ -111,11 +111,11 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
     currentY += lineHeight;
 
     // Courses/Modules
-    doc.setFontSize(12);
+    doc.setFontSize(14);
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
     coursesOrModulesArray.forEach((courseOrModule) => {
       doc.text(courseOrModule, pageWidth / 2, currentY, { align: 'center' });
-      currentY += lineHeight;
+      currentY += lineHeight-5;
     });
 
     // Completion Date
