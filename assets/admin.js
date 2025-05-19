@@ -114,7 +114,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
     doc.setFontSize(14); // Adjusted font size for the list
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
 
-    if (coursesOrModulesArray.length <= 3) {
+    if (coursesOrModulesArray.length <= 2) {
       // Single-column layout
       coursesOrModulesArray.forEach((courseOrModule) => {
         doc.text(courseOrModule, pageWidth / 2, currentY, { align: 'center' });
@@ -122,7 +122,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
       });
     } else {
       // Two-column layout
-      const columnGap = 80; // Horizontal gap between columns
+      const columnGap = 100; // Horizontal gap between columns
       const columnStartXLeft = pageWidth / 2 - columnGap / 2; // Left column starting position
       const columnStartXRight = pageWidth / 2 + columnGap / 2; // Right column starting position
       let currentYLeft = currentY; // Y position for the left column
