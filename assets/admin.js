@@ -121,27 +121,33 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
         currentY += lineHeight;
       });
     } else {
-      // Two-column layout
+      // Two-column layout for courses/modules
       const columnGap = 160; // Horizontal gap between columns
-      const columnWidth = (pageWidth - columnGap) / 2; // Width of each column
-      const columnStartXLeft = pageWidth / 2 - columnGap / 2 - columnWidth; // Left column starting position
-      const columnStartXRight = pageWidth / 2 + columnGap / 2; // Right column starting position
+      const columnWidth = (pageWidth - columnGap) / 2 - 10; // Width of each column with padding for safety
+      const columnStartXLeft = (pageWidth / 2) - columnGap / 2 - columnWidth; // Left column starting X position
+      const columnStartXRight = (pageWidth / 2) + columnGap / 2; // Right column starting X position
       let currentYLeft = currentY; // Y position for the left column
       let currentYRight = currentY; // Y position for the right column
 
       coursesOrModulesArray.forEach((courseOrModule, index) => {
+        const wrappedText = doc.splitTextToSize(courseOrModule, columnWidth); // Wrap text to fit within column width
+
         if (index % 2 === 0) {
           // Left column
-          doc.text(courseOrModule, columnStartXLeft, currentYLeft, { align: 'left' });
-          currentYLeft += lineHeight;
+          wrappedText.forEach((line) => {
+            doc.text(line, columnStartXLeft, currentYLeft, { align: 'left' });
+            currentYLeft += lineHeight;
+          });
         } else {
           // Right column
-          doc.text(courseOrModule, columnStartXRight, currentYRight, { align: 'left' });
-          currentYRight += lineHeight;
+          wrappedText.forEach((line) => {
+            doc.text(line, columnStartXRight, currentYRight, { align: 'left' });
+            currentYRight += lineHeight;
+          });
         }
       });
 
-      // Adjust `currentY` to the lowest point between the two columns to continue rendering the rest of the certificate correctly
+      // Adjust `currentY` to the lowest point between the two columns
       currentY = Math.max(currentYLeft, currentYRight);
     }
 
