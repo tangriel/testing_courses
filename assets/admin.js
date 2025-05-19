@@ -111,12 +111,38 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
     currentY += lineHeight;
 
     // Courses/Modules
-    doc.setFontSize(14);
+    doc.setFontSize(14); // Adjusted font size for the list
     const coursesOrModulesArray = selectedCoursesOrModules.split(', ');
-    coursesOrModulesArray.forEach((courseOrModule) => {
-      doc.text(courseOrModule, pageWidth / 2, currentY, { align: 'center' });
-      currentY += lineHeight / 2;
-    });
+
+    if (coursesOrModulesArray.length <= 3) {
+      // Single-column layout
+      coursesOrModulesArray.forEach((courseOrModule) => {
+        doc.text(courseOrModule, pageWidth / 2, currentY, { align: 'center' });
+        currentY += lineHeight;
+      });
+    } else {
+      // Two-column layout
+      const columnGap = 80; // Horizontal gap between columns
+      const columnStartXLeft = pageWidth / 2 - columnGap / 2; // Left column starting position
+      const columnStartXRight = pageWidth / 2 + columnGap / 2; // Right column starting position
+      let currentYLeft = currentY; // Y position for the left column
+      let currentYRight = currentY; // Y position for the right column
+
+      coursesOrModulesArray.forEach((courseOrModule, index) => {
+        if (index % 2 === 0) {
+          // Left column
+          doc.text(courseOrModule, columnStartXLeft, currentYLeft, { align: 'center' });
+          currentYLeft += lineHeight;
+        } else {
+          // Right column
+          doc.text(courseOrModule, columnStartXRight, currentYRight, { align: 'center' });
+          currentYRight += lineHeight;
+        }
+      });
+
+      // Adjust `currentY` to the lowest point between the two columns to continue rendering the rest of the certificate correctly
+      currentY = Math.max(currentYLeft, currentYRight);
+    }
 
     // Completion Date
     doc.text(`on ${new Date(date).toLocaleDateString()}`, pageWidth / 2, currentY, { align: 'center' });
