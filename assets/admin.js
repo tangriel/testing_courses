@@ -122,7 +122,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
       });
     } else {
       // Two-column layout for courses/modules
-      const columnGap = 160; // Horizontal gap between columns
+      const columnGap = 60; // Horizontal gap between columns
       const columnWidth = (pageWidth - columnGap) / 2 - 10; // Width of each column with padding for safety
       const columnStartXLeft = (pageWidth / 2) - columnGap / 2 - columnWidth; // Left column starting X position
       const columnStartXRight = (pageWidth / 2) + columnGap / 2; // Right column starting X position
