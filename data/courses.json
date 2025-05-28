@@ -5,44 +5,44 @@
     "title_ua": "Тест-дизайн по-людськи",
     "description": "Master the art of test design with tools and human intelligence.",
     "description_ua": "Вивчіть мистецтво тест-дизайну із застосуванням інструментів та людського розуму.",
-    "price": "200 USD",
-    "start_date": "2025-06-01",
-    "end_date": "2025-06-30",
+    "price": "8000 UAH",
+    "start_date": "2025-06-17",
+    "end_date": "2025-07-01",
     "modules": [
       {
         "name": "Basic Test Design Techniques",
         "name_ua": "Базові техніки тест-дизайну",
-        "price": "50 USD",
-        "date": "2025-06-03",
-        "time": "10:00 AM"
+        "price": "2000 UAH",
+        "date": "2025-06-17",
+        "time": "19:00 - 21:00"
       },
       {
         "name": "Combinatorial Test Design",
         "name_ua": "Комбінаторний тест-дизайн",
-        "price": "50 USD",
-        "date": "2025-06-10",
-        "time": "2:00 PM"
+        "price": "2000 UAH",
+        "date": "2025-06-19",
+        "time": "19:00 - 21:00"
       },
       {
         "name": "State-Transition",
         "name_ua": "Стани та переходи",
-        "price": "50 USD",
-        "date": "2025-06-17",
-        "time": "10:00 AM"
+        "price": "2000 UAH",
+        "date": "2025-06-24",
+        "time": "19:00 - 21:00"
       },
       {
         "name": "Practical Session 1",
         "name_ua": "Практичне заняття 1",
-        "price": "25 USD",
-        "date": "2025-06-24",
-        "time": "2:00 PM"
+        "price": "1000 UAH",
+        "date": "2025-06-26",
+        "time": "19:00 - 21:00"
       },
       {
         "name": "Practical Session 2",
         "name_ua": "Практичне заняття 2",
-        "price": "25 USD",
-        "date": "2025-06-28",
-        "time": "10:00 AM"
+        "price": "1000 UAH",
+        "date": "2025-07-01",
+        "time": "19:00 - 21:00"
       }
     ]
   }
