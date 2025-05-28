@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const translations = {
     en: {
       "header-title": "Hanna Kaplun",
-      "header-subtitle": "Expert in software testing, delivering exceptional courses for aspiring professionals.",
+      "header-subtitle": "Expert in software testing, system and business analysis.",
       "about-title": "About Me",
-      "about-description": `Hi, I'm Hanna Kaplun, a software testing expert with a proven track record in delivering high-quality training. My courses focus on practical, real-world testing techniques to help you excel. Connect with me on <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
+      "about-description": `Hi, I'm Hanna Kaplun, an expert in software testing with a proven track record in delivering high-quality training. My course focuses on application of test design techniques, application of AI to leverage it and understand its limitations. Connect with me on <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
       "course-details-title": "Course Details",
       "course-duration": "Duration:",
       "course": "Course",
@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     ua: {
       "header-title": "Ганна Каплун",
-      "header-subtitle": "Експерт у тестуванні ПЗ, надаю високоякісні курси для майбутніх професіоналів.",
+      "header-subtitle": "Експерт у тестуванні ПЗ, системному та бізнес-аналізі.",
       "about-title": "Про мене",
-      "about-description": `Привіт! Я Ганна Каплун, експерт з тестування програмного забезпечення з великим досвідом у навчанні. Мої курси зосереджені на практичних методах тестування, які допоможуть вам досягти успіху. Зв'яжіться зі мною через <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
+      "about-description": `Привіт! Я Ганна Каплун, експерт з тестування програмного забезпечення з великим досвідом у навчанні. Мій курс - про застосування технік тест-дизайну, використання ШІ для цього і розуміння його обмежень. Зв'яжіться зі мною через <a href="https://www.linkedin.com/in/hanna-kaplun/" target="_blank">LinkedIn</a>.`,
       "course-details-title": "Деталі курсу",
       "course-duration": "Тривалість:",
       "course": "Курс",
