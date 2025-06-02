@@ -19,7 +19,7 @@ document.getElementById('certificate-form').addEventListener('submit', async fun
     const certificateId = await generateCertificateId(name, selectedOptions);
 
     // Save certificate data
-    saveCertificateData(name, selectedCoursesOrModules, date, certificateId);
+    await saveCertificateData(name, selectedCoursesOrModules, date, certificateId);
 
     // Generate and download the certificate
     generateCertificatePDF(name, selectedCoursesOrModules, date, certificateId);
@@ -199,6 +199,7 @@ function generateCertificatePDF(name, selectedCoursesOrModules, date, certificat
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
@@ -216,7 +217,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-function saveCertificateData(name, selectedCoursesOrModules, date, certificateId) {
+// Initialize Firebase Auth and sign in anonymously
+const auth = getAuth(app);
+let isReady = false;
+
+signInAnonymously(auth)
+  .then(() => {
+    isReady = true;
+    // Now Firebase DB can be used safely!
+  })
+  .catch((error) => {
+    console.error("Anonymous sign-in error:", error);
+    alert("Failed to authenticate. Please refresh the page or try again later.");
+  });
+
+async function saveCertificateData(name, selectedCoursesOrModules, date, certificateId) {
+  // Wait until authentication is ready
+  if (!isReady) {
+    await new Promise(resolve => onAuthStateChanged(auth, () => resolve()));
+  }
+
   const certificateRef = ref(db, `certificates/${certificateId}`);
   const certificateData = {
     name,
@@ -225,12 +245,13 @@ function saveCertificateData(name, selectedCoursesOrModules, date, certificateId
     certificateId
   };
 
-  set(certificateRef, certificateData)
+  return set(certificateRef, certificateData)
     .then(() => {
       console.log('Certificate saved successfully');
     })
     .catch(error => {
       console.error('Error saving certificate:', error);
+      throw error;
     });
 }
 

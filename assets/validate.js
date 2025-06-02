@@ -1,6 +1,7 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 
 // Firebase configuration (replace with your own Firebase project configuration)
 const firebaseConfig = {
@@ -18,6 +19,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// Initialize Firebase Auth and sign in anonymously
+const auth = getAuth(app);
+let isReady = false;
+
+signInAnonymously(auth)
+  .then(() => {
+    isReady = true;
+    // Now Firebase DB can be used safely!
+  })
+  .catch((error) => {
+    console.error("Anonymous sign-in error:", error);
+    alert("Failed to authenticate. Please refresh the page or try again later.");
+  });
+
 // Function to validate certificate
 document.getElementById('validation-form').addEventListener('submit', async function (event) {
   event.preventDefault();
@@ -31,6 +46,12 @@ document.getElementById('validation-form').addEventListener('submit', async func
   resultDiv.textContent = 'Validating certificate...';
 
   try {
+    // Wait until authentication is ready
+    if (!isReady) {
+      resultDiv.textContent = "Authenticating... please wait.";
+      await new Promise(resolve => onAuthStateChanged(auth, () => resolve()));
+    }
+
     const certificateRef = ref(db, 'certificates');
     const snapshot = await get(certificateRef);
 
