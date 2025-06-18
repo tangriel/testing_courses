@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         courseInfoDiv.appendChild(courseDescription);
 
         const courseDates = document.createElement('p');
-        courseDates.textContent = `${translations[lang]["course-duration"]} ${course.start_date} to ${course.end_date}`;
+        courseDates.textContent = `${translations[lang]["course-duration"]} ${course.start_date} - ${course.end_date}`;
         courseInfoDiv.appendChild(courseDates);
 
         const moduleGrid = document.createElement('div');
