@@ -6,42 +6,42 @@
     "description": "Master the art of test design with tools and human intelligence.<br/>1. Basic Test Design Techniques + homework<br/>Equivalence partitioning, boundary value analysis and their limitations, combining the two techniques. Using LLM to generate tests and possible hallucinations. Country game practice.<br/>2. Combinatorial Test Design + homework<br/>Explicit and implicit dependencies, pairwise or other types of combinatorial coverage, cause-effect, how to code it. Using LLM to generate combinatorial coverage. Examples.<br/>3. State-Transition + homework<br/>Definition, how and when to apply state-transition technique, how to code it. Using LLM to generate edge coverage. Which technique-practice.<br/>4. Practical Session 1<br/>System bets, deposit state-transition, navigation: search and routing.<br/>5. Practical Session 2<br/>Union-find and mazes, time tracker, rotate-pan-zoom.<br/>Training language is Ukrainian.",
     "description_ua": "Вивчіть мистецтво тест-дизайну із застосуванням інструментів та людського розуму.<br/>1. Базові техніки тест-дизайну + домашнє завдання<br/>Еквівалентне розбиття, аналіз граничних значень та їхні обмеження, поєднання двох технік. Використання LLM для генерації тестів і можливі галюцинації. Гра в країни.<br/>2. Комбінаторний тест-дизайн + домашнє завдання<br/>Явні та неявні залежності, парне чи інше комбінаторне покриття, причинно-наслідкові зв'язки, як це реалізувати. Використання LLM для генерації комбінаторного покриття. Приклади.<br/>3. Стани та переходи + домашнє завдання<br/>Визначення, як і коли застосовувати техніку станів і переходів, як це реалізувати. Використання LLM для генерації покриття ребер. Практика у виборі технік.<br/>4. Практичне заняття 1<br/>Системні ставки, стани та переходи для депозиту, навігація: пошук і побудова маршрутів.<br/>5. Практичне заняття 2<br/>Union-find та лабіринти, трекер часу, обертання-рух-масштабування.<br/>Мова тренінгу - українська.",
     "price": "6000 UAH",
-    "start_date": "2025-07-15",
-    "end_date": "2025-07-29",
+    "start_date": "2025-08-04",
+    "end_date": "2025-08-18",
     "modules": [
       {
         "name": "Basic Test Design Techniques",
         "name_ua": "Базові техніки тест-дизайну",
         "price": "1500 UAH",
-        "date": "2025-07-15",
+        "date": "2025-08-04",
         "time": "19:00 - 21:00"
       },
       {
         "name": "Combinatorial Test Design",
         "name_ua": "Комбінаторний тест-дизайн",
         "price": "1500 UAH",
-        "date": "2025-07-17",
+        "date": "2025-08-06",
         "time": "19:00 - 21:00"
       },
       {
         "name": "State-Transition",
         "name_ua": "Стани та переходи",
         "price": "1500 UAH",
-        "date": "2025-07-22",
+        "date": "2025-08-11",
         "time": "19:00 - 21:00"
       },
       {
         "name": "Practical Session 1",
         "name_ua": "Практичне заняття 1",
         "price": "750 UAH",
-        "date": "2025-07-24",
+        "date": "2025-08-13",
         "time": "19:00 - 21:00"
       },
       {
         "name": "Practical Session 2",
         "name_ua": "Практичне заняття 2",
         "price": "750 UAH",
-        "date": "2025-07-29",
+        "date": "2025-08-18",
         "time": "19:00 - 21:00"
       }
     ]
