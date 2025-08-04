@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "no-certificates": "База сертифікатів порожня.",
       "no-matching": "Сертифікат не знайдено.",
       "validation-error": "Сталася помилка під час перевірки сертифіката.",
-      "certificate-found": "Знайдено сертифікат(и)",
+      "certificate-found": "сертифікат(и) знайдено",
       "name-label": "Ім'я:",
       "courses-label": "Курси/Модулі:",
       "date-label": "Дата завершення:",

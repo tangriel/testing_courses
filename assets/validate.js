@@ -135,10 +135,7 @@ function displayCertificateValidationResults(certificates, resultDiv, lang) {
   resultDiv.querySelectorAll('.certificate-card').forEach(card => {
     card.addEventListener('click', () => {
       const certId = card.getAttribute('data-cert-id');
-      const cert = certificates.find(c => c.certificateId === certId);
-      if (cert) {
-        generateCertificatePDF(cert.name, cert.coursesOrModules, cert.date, cert.certificateId, true);
-      }
+      window.open(`/certificate-check.html?id=${encodeURIComponent(certId)}`, '_blank');
     });
   });
 }
