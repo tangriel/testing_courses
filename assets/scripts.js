@@ -16,7 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
       "label-phone": "Phone:",
       "label-courses": "Select Courses/Modules:",
       "label-comments": "Additional Comments or Questions:",
-      "submit-button": "Sign Up"
+      "submit-button": "Sign Up",
+      "certificate-check-title": "Certificate Validation",
+      "label-certificate-id": "Certificate ID:",
+      "or-text": "OR",
+      "label-participant-name": "Name and Surname:",
+      "validate-button": "Validate Certificate",
+      "validating-certificate": "Validating certificate...",
+      "authenticating": "Authenticating... please wait.",
+      "no-certificates": "Certificate database is empty.",
+      "no-matching": "No matching certificates found.",
+      "validation-error": "An error occurred while validating the certificate.",
+      "certificate-found": "Certificate(s) Found",
+      "name-label": "Name:",
+      "courses-label": "Courses/Modules:",
+      "date-label": "Completion Date:",
+      "id-label": "Certificate ID:"
     },
     ua: {
       "header-title": "Ганна Каплун",
@@ -33,7 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
       "label-phone": "Телефон:",
       "label-courses": "Виберіть курси/модулі:",
       "label-comments": "Додаткові коментарі або питання:",
-      "submit-button": "Записатися"
+      "submit-button": "Записатися",
+      "certificate-check-title": "Перевірка сертифіката",
+      "label-certificate-id": "ID сертифіката:",
+      "or-text": "АБО",
+      "label-participant-name": "Ім'я та прізвище:",
+      "validate-button": "Перевірити сертифікат",
+      "validating-certificate": "Перевірка сертифіката...",
+      "authenticating": "Аутентифікація... зачекайте.",
+      "no-certificates": "База сертифікатів порожня.",
+      "no-matching": "Сертифікат не знайдено.",
+      "validation-error": "Сталася помилка під час перевірки сертифіката.",
+      "certificate-found": "Знайдено сертифікат(и)",
+      "name-label": "Ім'я:",
+      "courses-label": "Курси/Модулі:",
+      "date-label": "Дата завершення:",
+      "id-label": "ID сертифіката:"
     }
   };
 
@@ -128,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         courseInfoDiv.appendChild(moduleGrid);
-        
+
         // Add next run info below the module grid
         if (course.next_run_start_date && course.next_run_end_date) {
           const nextRunText = document.createElement('p');
