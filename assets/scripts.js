@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const languageSwitcher = document.getElementById('language-switcher');
   languageSwitcher.addEventListener('change', (event) => {
     const lang = event.target.value;
+    localStorage.setItem('lang', lang); // Save language for other pages
     updateLanguage(lang);
   });
 
