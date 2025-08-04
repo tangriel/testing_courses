@@ -81,6 +81,25 @@
     </form>
   </section>
 
+  <!-- Certificate Validation Section -->
+  <section id="certificate-check" class="container">
+    <h2>Certificate Validation</h2>
+    <form id="validation-form">
+      <label>
+        Certificate ID:
+        <input type="text" id="certificate-id">
+      </label>
+      <p style="text-align:center;">OR</p>
+      <label>
+        Name and Surname:
+        <input type="text" id="participant-name">
+      </label>
+      <button type="submit">Validate Certificate</button>
+    </form>
+    <div id="validation-result" style="display: none;"></div>
+  </section>
+
   <script src="assets/scripts.js"></script>
+  <script type="module" src="assets/validate.js"></script>
 </body>
 </html>

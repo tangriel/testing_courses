@@ -25,6 +25,15 @@
     </form>
     <div id="validation-result" style="display: none;"></div>
   </section>
+  <script type="module">
+    // Read certificate ID from URL and pre-fill the form
+    const urlParams = new URLSearchParams(window.location.search);
+    const certId = urlParams.get('id');
+    if (certId) {
+      document.getElementById('certificate-id').value = certId;
+      document.getElementById('validation-form').dispatchEvent(new Event('submit'));
+    }
+  </script>
   <script type="module" src="assets/validate.js"></script>
 </body>
 </html>

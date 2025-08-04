@@ -167,3 +167,64 @@ footer {
   padding: 10px;
   margin-top: 20px;
 }
+
+/* additional styling */
+/* Add a subtle gradient background */
+body {
+  background: linear-gradient(135deg, #f4f4f4 0%, #e9f0fa 100%);
+}
+
+/* Card effect for sections */
+section.container {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border: 1px solid #e3e3e3;
+  background: #fff;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.2s;
+}
+section.container:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+/* Header gradient and logo area */
+header.container {
+  background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Next run info highlight */
+.next-run-info {
+  background: #e6f7ff;
+  color: #0077b6;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Module grid improvements */
+.module-grid {
+  background: #f9fbfd;
+  border-radius: 5px;
+  border: 1px solid #e3e3e3;
+  margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .container, section.container {
+    padding: 0.5rem;
+  }
+  .module-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Add a hover effect for form fields */
+input:focus, select:focus, textarea:focus {
+  border-color: #3a7bd5;
+  outline: none;
+  box-shadow: 0 0 4px #3a7bd5;
+}
