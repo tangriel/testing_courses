@@ -135,7 +135,7 @@ function displayCertificateValidationResults(certificates, resultDiv, lang) {
   resultDiv.querySelectorAll('.certificate-card').forEach(card => {
     card.addEventListener('click', () => {
       const certId = card.getAttribute('data-cert-id');
-      window.open(`/certificate-check.html?id=${encodeURIComponent(certId)}`, '_blank');
+      window.open(`./certificate-check.html?id=${encodeURIComponent(certId)}`, '_blank');
     });
   });
 }
