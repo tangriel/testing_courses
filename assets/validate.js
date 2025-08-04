@@ -59,7 +59,7 @@ const messages = {
     noCertificates: "База сертифікатів порожня.",
     noMatching: "Сертифікат не знайдено.",
     error: "Сталася помилка під час перевірки сертифіката.",
-    found: "Знайдено сертифікат(и)",
+    found: "сертифікат(и) знайдено",
     name: "Ім'я:",
     courses: "Курси/Модулі:",
     date: "Дата завершення:",
@@ -121,18 +121,17 @@ function displayCertificateValidationResults(certificates, resultDiv, lang) {
   resultDiv.innerHTML = `<h2>${certificates.length} ${messages[lang].found}</h2>`;
   certificates.forEach(certificate => {
     const certHtml = `
-      <div class="certificate-card" style="margin-bottom: 10px; padding: 10px; background: #fff; border: 1px solid #ccc; border-radius: 5px; cursor:pointer;" data-cert-id="${certificate.certificateId}">
+      <div class="certificate-card" style="margin-bottom: 10px; padding: 10px; background: #fff; border: 1px solid #ccc; border-radius: 5px; cursor:pointer;" data-cert-id="${certificate.certificateId}" title="${lang === 'ua' ? 'Відкрити PDF сертифіката' : 'Open Certificate PDF'}">
         <p><strong>${messages[lang].name}</strong> ${certificate.name}</p>
         <p><strong>${messages[lang].courses}</strong> ${certificate.coursesOrModules}</p>
         <p><strong>${messages[lang].date}</strong> ${certificate.date}</p>
         <p><strong>${messages[lang].id}</strong> ${certificate.certificateId}</p>
-        <p style="color:#0077b6; text-decoration:underline; cursor:pointer;">${lang === 'ua' ? 'Відкрити PDF сертифіката' : 'Open Certificate PDF'}</p>
       </div>
     `;
     resultDiv.innerHTML += certHtml;
   });
 
-  // Add click event to each card to generate PDF
+  // Make the whole card clickable
   resultDiv.querySelectorAll('.certificate-card').forEach(card => {
     card.addEventListener('click', () => {
       const certId = card.getAttribute('data-cert-id');
