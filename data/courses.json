@@ -8,6 +8,8 @@
     "price": "6000 UAH",
     "start_date": "2025-08-04",
     "end_date": "2025-08-18",
+    "next_run_start_date": "2025-09-01",
+    "next_run_end_date": "2025-09-15",
     "modules": [
       {
         "name": "Basic Test Design Techniques",

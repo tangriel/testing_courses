@@ -128,6 +128,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         courseInfoDiv.appendChild(moduleGrid);
+        
+        // Add next run info below the module grid
+        if (course.next_run_start_date && course.next_run_end_date) {
+          const nextRunText = document.createElement('p');
+          nextRunText.className = 'next-run-info';
+          nextRunText.textContent = lang === 'ua'
+            ? `Наступний запуск курсу: ${course.next_run_start_date} - ${course.next_run_end_date}`
+            : `Next course run: ${course.next_run_start_date} - ${course.next_run_end_date}`;
+          courseInfoDiv.appendChild(nextRunText);
+        }
       });
     } catch (error) {
       console.error('Error loading courses:', error);
