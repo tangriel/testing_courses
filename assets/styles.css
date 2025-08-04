@@ -188,7 +188,7 @@ section.container:hover {
 
 /* Header gradient and logo area */
 header.container {
-  background: linear-gradient(90deg, #43ea7c 0%, #b6f7c1 100%);
+  background: linear-gradient(90deg, #228c4f 0%, #43ea7c 100%);
   color: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
