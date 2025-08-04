@@ -41,6 +41,9 @@ function getCurrentLang() {
 
 const lang = getCurrentLang();
 
+const header = document.getElementById('certificate-header');
+header.textContent = lang === 'ua' ? 'Сертифікат' : 'Certificate';
+
 const urlParams = new URLSearchParams(window.location.search);
 const certId = urlParams.get('id');
 
